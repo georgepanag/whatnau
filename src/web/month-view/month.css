@@ -8,28 +8,31 @@ body {
 }
 
 #top-bar{
-	height: 9em;	
+	height: 150px;	
 	background-color: #275b8a;
 }
 
+.calendar-row{
+	height: 10em;
+	border-bottom: 1px solid #bfd5db;
+}
+
+.calendar-shell{
+	width: 14.3%;
+	padding-top: 5px;
+	padding-left: 8px;
+	transition: all 0.5s;
+}
+
+.calendar-shell:hover{
+	box-shadow: 0 0 5px grey inset;
+}
+
+.my-border-right{
+	border-right: 1px solid #bfd5db;
+}
+
 #month-calendar{
-	border: 1px solid red;
-	height: 100%;
 	width: 100%;
 }
 
-#calendar-table tr{
-	height: 25%;
-	width: 100%;
-	border: 1px solid grey;
-}
-
-#calendar-table td {
-	width: 14.2%;
-	border: 1px solid grey;
-}
-
-#calendar-table{
-	border: 1px solid grey;
-	height: 100%;
-}

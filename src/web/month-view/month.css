@@ -1,0 +1,35 @@
+body, html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background-color: #f5f5f5;
+}
+
+#top-bar{
+	height: 9em;	
+	background-color: #275b8a;
+}
+
+#month-calendar{
+	border: 1px solid red;
+	height: 100%;
+	width: 100%;
+}
+
+#calendar-table tr{
+	height: 25%;
+	width: 100%;
+	border: 1px solid grey;
+}
+
+#calendar-table td {
+	width: 14.2%;
+	border: 1px solid grey;
+}
+
+#calendar-table{
+	border: 1px solid grey;
+	height: 100%;
+}

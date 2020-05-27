@@ -220,12 +220,12 @@ class User():
         for pair in tuples_usrnms:
             for usrname in pair:
                 f_usrnms.append(usrname)
-        print(f_usrnms)
+        #print(f_usrnms)
 
         for pair in tuples_events:
             for event in pair:
                 f_events.append(event)
-        print(f_events)
+        #print(f_events)
 
         for i in range(len(f_events)):
             #print(f_events[i][2])

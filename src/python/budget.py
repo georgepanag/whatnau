@@ -12,7 +12,7 @@ class Budget:
     def __init__(self):
         self.userID=userID
 
-    def select_day(choose_day, choose_user):
+    def select_day(self,choose_day, choose_user):
         val=choose_day
         
         # σύνδεση με το gui
@@ -32,7 +32,7 @@ class Budget:
 
 
 
-    def credit_card_connection(userID):
+    def credit_card_connection(self,userID):
         val=userID
         mycursor = mydb.cursor()
         #mycursor.execute("select cr_cardID from _budget where _budget.userID=_user.userID and _user.userID=%s ",(val,))
@@ -54,7 +54,7 @@ class Budget:
         mycursor.close()
         #mydb.close()
 
-    def set_budget_upper_bound (userID,budget_upper_bound):
+    def set_budget_upper_bound (self,userID,budget_upper_bound):
         val=budget_upper_bound
         mycursor = mydb.cursor()
 
@@ -72,7 +72,7 @@ class Budget:
 #In the next method, the money that the user spends had to be added automatically to the month by the credit card(if we had a real credit card).
 #Here, the user adds the money he spent by his/her own.
 
-    def get_money_spent (userID,money_spent ):
+    def get_money_spent (self,userID,money_spent ):
         val2=userID
         val=money_spent
         total_spent_money=val
@@ -91,10 +91,7 @@ class Budget:
         
         mycursor.execute=("select budget_upper_bound from _budget where userID=%s ",(val2,))
         myresult = mycursor.fetchone()
-        print(myresult)
-        
-        
-        
+        print(myresult) #Prints result as tuple
         mycursor.close()
         #mydb.close()
         

@@ -82,7 +82,7 @@ class Event():
 mydb= mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="pasatempo64",
+        passwd=password,
         database="whatnau")
 e=Event(1,importance="LOW")
 print(e.importance)

@@ -248,7 +248,7 @@ class User():
 mydb= mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="pasatempo64",
+        passwd=password,
         database="whatnau")
 
 user1=User(1)#Bobos

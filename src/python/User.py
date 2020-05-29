@@ -35,6 +35,51 @@ class User():
         mycursor.close()
         #mydb.close()
     
+    def overlappingEvents(self,start_,end_):#checkConflicts
+        s=datetime.strptime(str(start_),'%Y-%m-%d %H:%M:%S')#convert into datetime for better manipulation
+        e=datetime.strptime(str(end_),'%Y-%m-%d %H:%M:%S')
+        datetimes=[]
+        x=self.showListEvents()
+        #get datetime instanses
+        print(s.max)
+        for i in x:
+            if isinstance(i,datetime):
+                datetimes.append(i)
+        #print(datetimes)
+        
+        #check for overlapping events
+        
+        d=0
+        overlap=0
+        #r1 = Range(start=start_, end=end_)
+        print(d)
+        while(d!=len(datetimes)):
+            #r2 = Range(start=datetimes[d], end=datetimes[d+1])
+            print("start="+str(datetimes[d])+"\nend="+str(datetimes[d+1]))
+            if not(((s < datetimes[d]) and (e < datetimes[d])) or ((s >datetimes[d+1]) and (e >datetimes[d+1]))):
+                print("overlap")
+                overlap+=1
+            else:
+                print("ok")
+                overlap+=0
+            '''latest_start = max(r1.start, r2.start)
+            earliest_end = min(r1.end, r2.end)
+            delta = (earliest_end - latest_start).days + 1
+            overlap = max(0, delta)
+            print(overlap)'''
+            
+            d+=2
+            print(d)
+        if(overlap!=0):
+            print(overlap)
+            return 1
+        else:
+            print(overlap)
+            return 0
+
+    
+        
+    
     def showUrgEvents(self,userID):
         urg_events=[]
         val=(userID)
@@ -51,12 +96,20 @@ class User():
         #mydb.close()
         
     def addEvent(self,descr,_type,importance,start_date,_end_date,shared): #To userID to pairnei automata apo to User antikeimeno
-        val=(self.userID,descr,_type,importance,start_date,_end_date,shared)
-        mycursor = mydb.cursor()
-        mycursor.execute("insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values (%s, %s, %s, %s, %s, %s, %s)",val)
-        mydb.commit()               
-        print(mycursor.rowcount, "event created")
-        mycursor.close()
+        #(First)Check for event conflicts
+        conflict=self.overlappingEvents(start_date,_end_date)
+        if(conflict!=1):
+            val=(self.userID,descr,_type,importance,start_date,_end_date,shared)
+            mycursor = mydb.cursor()
+            mycursor.execute("insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values (%s, %s, %s, %s, %s, %s, %s)",val)
+            mydb.commit()               
+            print(mycursor.rowcount, "event created")
+            mycursor.close()
+        else:
+            print("conflict occcur")
+
+
+    
 
 
     def searchBuddy(self,buddy_usrname):

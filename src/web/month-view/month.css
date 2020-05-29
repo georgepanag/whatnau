@@ -32,6 +32,10 @@ body {
 	border-right: 1px solid #bfd5db;
 }
 
+#main{
+	transition: filter 0.5s;
+}
+
 #week-rows{
 	border-top: 1px solid #bfd5db;
 }
@@ -49,11 +53,46 @@ body {
 }
 
 #day-side-panel{
-	width : 200px;
-	margin-left : 0;
-	margin-top : 0;
-	height : 200px;
+	width : 0px;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	overflow-y: hidden;
 	z-index : 2;
 	background-color : red;
+	transition: 0.5s;
 }
+
+#big-trans-back-button{
+	visibility: hidden;
+	position: fixed;
+	height: 100%;
+	overflow-y: hidden;
+	right:0;
+	left: 600px;
+	z-index: 3;
+	top: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -4,12 +4,13 @@ import mysql.connector
 mydb= mysql.connector.connect(
 host="localhost",
 user="root",
-passwd="pasatempo64",
+passwd="password",
 database="whatnau")
 
 class Budget:
-
-    def __init__(self):
+    
+ 
+    def __init__(self,userID):
         self.userID=userID
 
     def select_day(self,choose_day, choose_user):
@@ -41,14 +42,15 @@ class Budget:
         myresult = mycursor.fetchone()
         
         
-        if (myresult) != None:
+        if (myresult) != None :
             print("The connection with the credit card was successful!")
             print("The credit card's number is :")
-            print(myresult)
-            return 1
+            print (str(myresult[0]))
+            return str(myresult[0])
+            
         else:
             print("The credit card can not be found")
-            return None
+            #return None
         
 
         mycursor.close()
@@ -68,38 +70,84 @@ class Budget:
 
         mycursor.close()
        #mydb.close()
-
+         
 #In the next method, the money that the user spends had to be added automatically to the month by the credit card(if we had a real credit card).
 #Here, the user adds the money he spent by his/her own.
 
-    def get_money_spent (self,userID,money_spent ):
-        val2=userID
-        val=money_spent
-        total_spent_money=val
-        total_spent_money= total_spent_money+ val
+
+    def add_money_spent (self,userID,money_spent ):
+        val= userID
+        mycursor1 = mydb.cursor()
+        
+        mycursor1.execute("select monthly_budget from _budget where userID=%s ",(val,))
+        
+        myresult = mycursor1.fetchone()
+        already_spent= int( myresult[0])
+        print(already_spent)
         
         
-        mycursor = mydb.cursor()
+        mycursor1.close()
+
+        val2=money_spent
+        
+        
+        
+        
+        
+        total_money_spent=already_spent+val2
+        
+        
+        
+        mycursor2 = mydb.cursor()
         
         sql="update _budget set monthly_budget = %s where userID=%s"
-        variable=(total_spent_money, userID)
-        mycursor.execute(sql, variable)
-        #myresult2 = mycursor.fetchone()
+        variable=(total_money_spent, userID)
+        mycursor2.execute(sql, variable)
+       
         
         mydb.commit()
-        print(mycursor.rowcount, "record(s) affected")
+        print(mycursor2.rowcount, "record(s) affected")
         
-        mycursor.execute=("select budget_upper_bound from _budget where userID=%s ",(val2,))
-        myresult = mycursor.fetchone()
-        print(myresult) #Prints result as tuple
-        mycursor.close()
+        
+        
+        
+        
+        mycursor2.close()
         #mydb.close()
+
+    def check_upper_bound( self,userID):
+        val=userID
+        val2=userID 
+        
+        mycursor = mydb.cursor()
+        mycursor.execute("select budget_upper_bound from _budget where userID=%s ",(val,))
+        
+        myresult = mycursor.fetchone()
+        #print (int(myresult[0])) #just checking the rusult
+        mycursor.close()
+
+
+
+        mycursor1 = mydb.cursor()
+        mycursor1.execute("select monthly_budget from _budget where userID=%s ",(val2,))
+        
+        myresult2 = mycursor1.fetchone()
+        #print (int(myresult2[0])) #just checking the result
+        
+        mycursor1.close()
+
+        if myresult2>myresult:
+            print("Upper_bound_exceeded!")
+
+        
+        
         
 
         
 #create an object "budget1" for testing the functions by adding arguments to them
-budget1=Budget
-#budget1.select_day()
-#budget1.credit_card_connection()
-#budget1.set_budget_upper_bound()
-#budget1.get_money_spent()
+budget1=Budget(1)
+#budget1.select_day(16,1)
+#budget1.credit_card_connection(1)
+#budget1.set_budget_upper_bound(1,100)
+#budget1.add_money_spent(3,200)
+#budget1.check_upper_bound(1)

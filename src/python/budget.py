@@ -123,7 +123,7 @@ class Budget:
         mycursor.execute("select budget_upper_bound from _budget where userID=%s ",(val,))
         
         myresult = mycursor.fetchone()
-        #print (int(myresult[0])) #just checking the rusult
+        #print (int(myresult[0])) #just checking the result
         mycursor.close()
 
 
@@ -138,7 +138,29 @@ class Budget:
 
         if myresult2>myresult:
             print("Upper_bound_exceeded!")
+            return " Upper_bound_exceeded!"
 
+    def show_day_money_spent(self,userID,mydb):
+        val=userID
+        
+
+        mycursor = mydb.cursor()
+        mycursor.execute("select day_for_money_spent  from _budget where userID=%s ",(val,))
+        
+        myresult = mycursor.fetchone()
+        #print (str(myresult[0])) #just checking the result
+        #return str(myresult)
+        mycursor.close()
+
+        mycursor2 = mydb.cursor()
+        mycursor2.execute("select day_money_spent  from _budget where userID=%s ",(val,))
+        
+        myresult2 = mycursor2.fetchone()
+        #print (str(myresult2[0])) #just checking the result
+        
+        mycursor2.close()
+        return str(myresult)
+        return str(myresult2)
         
         
         
@@ -146,8 +168,9 @@ class Budget:
         
 #create an object "budget1" for testing the functions by adding arguments to them
 budget1=Budget(1)
-#budget1.select_day(16,1)
-#budget1.credit_card_connection(1)
-#budget1.set_budget_upper_bound(1,100)
-#budget1.add_money_spent(3,200)
-#budget1.check_upper_bound(1)
+#budget1.select_day(16,1,mydb)
+#budget1.credit_card_connection(1,mydb)
+#budget1.set_budget_upper_bound(1,1000,mydb)
+#budget1.add_money_spent(3,200,mydb)
+#budget1.check_upper_bound(3,mydb)
+#budget1.show_day_money_spent(2,mydb)

@@ -1,6 +1,7 @@
 import mysql.connector
 import datetime
 from datetime import datetime
+from collections import namedtuple
 
 class User():
 
@@ -22,7 +23,7 @@ class User():
         
     
     
-    def showListEvents(self):#show user's events
+    def showListEvents(self,mydb):#show user's events
         events=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -41,7 +42,7 @@ class User():
         s=datetime.strptime(str(start_),'%Y-%m-%d %H:%M:%S')#convert into datetime for better manipulation
         e=datetime.strptime(str(end_),'%Y-%m-%d %H:%M:%S')
         datetimes=[]
-        x=self.showListEvents()
+        x=self.showListEvents(mydb)
         #get datetime instanses
         print(s.max)
         for i in x:
@@ -83,7 +84,7 @@ class User():
 
 
         
-    def showUrgEvents(self):
+    def showUrgEvents(self,mydb):
         urg_events=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -99,7 +100,7 @@ class User():
         #mydb.close()
 
     #checks shared space availability for user with self.userID
-    def sharedSpaceFull(self):
+    def sharedSpaceFull(self,mydb):
         val=(self.userID)
         mycursor = mydb.cursor()
         mycursor.execute("select shared_space from _user where userID= %s ",(val,))
@@ -117,12 +118,12 @@ class User():
         
        
         
-    def addEvent(self,descr,_type,importance,start_date,_end_date,shared): #To userID to pairnei automata apo to User antikeimeno
+    def addEvent(self,descr,_type,importance,start_date,_end_date,shared,mydb): #To userID to pairnei automata apo to User antikeimeno
         
         if(shared=="YES"):
-            if(self.sharedSpaceFull()==1):
+            if(self.sharedSpaceFull(mydb)==1):
                 print("full shared space")
-            if(self.sharedSpaceFull()==2):
+            if(self.sharedSpaceFull(mydb)==2):
                 print("<im in elif> ")
                 
                 print("Shared event space is full.\nPLEASE REMOVE SOME SHARED EVENTS OR MODIFY THE CORRESPONDING LABEL<shared>\n")
@@ -164,7 +165,7 @@ class User():
         
         
 
-    def searchBuddy(self,buddy_usrname):
+    def searchBuddy(self,buddy_usrname,mydb):
         val=(buddy_usrname)
         mycursor = mydb.cursor()
         mycursor.execute("select * from _user where usrname = %s ",(val,))
@@ -180,8 +181,8 @@ class User():
         mycursor.close()
         #mydb.close()
 
-    def sendFriendReq(self,to_usrname):
-        find=self.searchBuddy(to_usrname)             
+    def sendFriendReq(self,to_usrname,mydb):
+        find=self.searchBuddy(to_usrname,mydb)             
         
         if(find==1):
             #First find id of requested buddy
@@ -217,7 +218,7 @@ class User():
         #print("to user: "+str(to_user.userID))
 
         
-    def showFriendReq(self):
+    def showFriendReq(self,mydb):
             friend_req=[]
             val=(self.userID)
             mycursor = mydb.cursor()
@@ -231,7 +232,7 @@ class User():
             return friend_req
             mycursor.close()
 
-    def acceptFriendReq(self,from_usrname):
+    def acceptFriendReq(self,from_usrname,mydb):
         #Find -from_id- from -from_username-
         val=(from_usrname)
         mycursor = mydb.cursor()
@@ -261,7 +262,7 @@ class User():
 
         
 
-    def denyFriendReq(self,from_usrname):
+    def denyFriendReq(self,from_usrname,mydb):
             #Find from_id from from_username
             val=(from_usrname)
             mycursor = mydb.cursor()
@@ -280,7 +281,7 @@ class User():
             mycursor_1.close()
 
 
-    def getBuddiesID(self):
+    def getBuddiesID(self,mydb):
         buddies_list=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -294,8 +295,8 @@ class User():
         return buddies_list
         mycursor.close()
         
-    def showFriendsEvents(self):
-        b=self.getBuddiesID()
+    def showFriendsEvents(self,mydb):
+        b=self.getBuddiesID(mydb)
         print(b)
         #v=("YES")
         shared={}
@@ -353,7 +354,4 @@ mydb= mysql.connector.connect(
         user="root",
         passwd="pasatempo64",
         database="whatnau")
-
-#code for testing goes here
-    
 mydb.close()

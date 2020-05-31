@@ -1,4 +1,5 @@
 drop database whatnau;
+
 create database whatnau;
 grant all privileges on whatnau.* to 'whatnau'@'localhost';
 use whatnau;
@@ -16,7 +17,7 @@ _type enum("O","SU"),/*O=organiser , SU=simple_user*/
 job tinytext default NULL, 
 corporation varchar(25) default NULL,
 reg_date datetime default now(),
-space int(3) default 5/*shared event space*/,
+shared_space int(3) default 5/*shared event space*/,
 primary key(userID)
 
 
@@ -63,7 +64,7 @@ constraint EVENT_USER foreign key (userID) references _user(userID) on delete ca
 
 
 
-create table promoted_event(
+create table promoted_event( /*from organiser*/
 
 promotedID bigint(16) not null auto_increment,
 userID bigint(16) not null,
@@ -96,25 +97,80 @@ constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_ev
 
 
 
-insert into _user(email,usrname,pass,cr_cardID,gender,_type,job,corporation) values
-("jason@gmail.com","jason","JJason","54546546","M","SU",null,null),
-("mxins@freemail.gr","Marinero","you_shall_not_pass",null,"M","SU",null,null),
-("lil@hotmail.gr","Lily23","234523",null,"F","O","sales","SalesUK CO"),
-("bob@yahoo.gr","Bobos","whatever","088879889686986","M","O","Bar owner",null);
 
 
-insert into buddies(userID,buddy) values (1,2),(2,3),(1,3),(3,2);
+
+insert into _user(email,usrname,pass,cr_cardID,gender,_type,job,corporation,shared_space) values
+("jason@gmail.com","jason","JJason","54546546","M","SU",null,null,0),
+("mxins@freemail.gr","Marinero","you_shall_not_pass",null,"M","O",null,null,3),
+("lil@hotmail.gr","Lily23","234523",null,"F","O","sales","SalesUK CO",5),
+("bob@yahoo.gr","Bobos","whatever","088879889686986","M","O","Bar owner",null,2);
 
 
+insert into buddies(userID,buddy) values (1,2),(2,3),(1,3),(3,2),(2,4),(1,4),(3,4);
+
+
+
+/*for testing*/
 insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values
-(1,"Software Engineering Project","social,study","MED","2018-02-13 12:23:34","2018-02-13 15:23:34","NO"),
-(2,"Hanging out","social","LOW","2018-02-13 17:23:34","2018-02-13 20:23:34","YES"),
-(3,"undefined","undefined","MED","2018-02-13 20:23:34","2018-03-13 20:23:34","NO"),
-(2,"basketball","sports","HIGH","2018-02-13 18:23:34","2018-02-13 21:23:34","NO"),
-(4,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 23:00:00","YES");
+(1,"Software Engineering Project","social,study","MED","2018-02-13 12:00:00","2018-02-13 13:00:00","NO"),
+(1,"Hanging out","social","LOW","2018-02-13 14:00:00","2018-02-13 15:00:00","YES"),
+(1,"undefined","undefined","MED","2018-02-13 16:00:00","2018-02-13 17:00:00","YES"),
+(4,"basketball","sports","HIGH","2018-02-13 18:00:00","2018-02-13 19:00:00","NO"),
+(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO");
 
 insert into buddy_req(from_user,to_user,is_accepted) values 
 (1,4,0),
 (2,4,0),
 (1,3,0),
 (3,4,0);
+
+
+/*"update_shared_space_1" trigger updates <_user.shared_space> every time a shared event is going to be deleted when condition<_event.userID=_user.userID> is satisfied*/
+delimiter $$
+create trigger update_shared_space_1 before delete on _event
+for each row
+begin
+	set @a:=(select shared from _event where userID=old.userID);
+    if(@a="YES") then
+		update _user set shared_space=shared_space+1 where _user.userID=old.userID;
+	else
+		update _user set shared_space=shared_space where _user.userID=old.userID;
+	end if;
+end $$
+delimiter ;
+
+
+delimiter $$
+create trigger update_shared_space_2 before update on _event
+for each row
+begin
+	set @t:=(select _type from _user where _user.userID=old.userID);
+    
+	set @sp:=(select shared_space from _user where _user.userID=old.userID);
+    
+    if (@t="SU") then
+		if  ((old.shared="YES") and (new.shared="NO")) then
+			if ((@sp>=0) and (@sp<5)) then
+				update _user set shared_space=shared_space+1 where _user.userID=old.userID;
+            else
+				update _user set shared_space=shared_space+0 where _user.userID=old.userID;
+			end if;            
+		elseif ((old.shared="NO") and (new.shared="YES")) then
+			if((@sp>0) and (@sp<=5)) then
+				update _user set shared_space=shared_space-1 where _user.userID=old.userID;
+			else
+				signal sqlstate '45000' set message_text = "Limited_Priviledges:Please free some of your shared space";
+            end if;
+        else
+			#signal sqlstate '45000' set message_text = "<else> 1";
+			set @dummy= "same";
+			#update _event set userID=new.userID,descr=new.descr,_type=new._type,importance=new.importance,start_date=new.start_date,_end_date=new._end_date where old.eventID=new.eventID;
+		end if;
+	else
+		set @dummy="else";
+		#update _event set userID=new.userID,descr=new.descr,_type=new._type,importance=new.importance,start_date=new.start_date,_end_date=new._end_date where old.eventID=new.eventID;
+    end if;    
+end $$    
+    
+delimiter ;

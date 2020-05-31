@@ -20,9 +20,9 @@ class User():
         
     
     
-    def showListEvents(self,userID):
+    def showListEvents(self):
         events=[]
-        val=(userID)
+        val = self.userID
         mycursor = mydb.cursor()
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(val,))
         myresult = mycursor.fetchall()
@@ -248,7 +248,7 @@ class User():
 mydb= mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="pasatempo64",
+        passwd="pasatempos64",
         database="whatnau")
 
 user1=User(1)#Bobos

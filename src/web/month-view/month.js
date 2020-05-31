@@ -4,20 +4,19 @@ let month_day = date.getDate();
 let year = date.getYear();
 eel.get_month_days()(ret => populate_calendar_nums("#week-rows",ret));
 
-function populate_calendar_nums(dom_id, days_obj){
-	let days_list = days_obj.days_list;
+function populate_calendar_nums(dom_id, days){
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
 	for(week of weeks){
 		let days = week.children;
 		for(day of days){
-			day.firstElementChild.textContent = days_list[idx][0]; 
+			day.firstElementChild.textContent = days[idx][0]; 
 			day.addEventListener("click", display_day_panel)
-			if(days_list[idx][1] != month){
+			if(days[idx][1] != month){
 				day.style.backgroundColor = "#b9c9c8";
 				day.style.color = "white";
 			}
-			if(days_list[idx][0] == month_day && days_list[idx][1] == month){
+			if(days[idx][0] == month_day && days[idx][1] == month){
 				day.firstElementChild.style.color = "#0088ff";
 			}
 			idx = idx+1;

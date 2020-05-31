@@ -10,6 +10,7 @@ body {
 #top-bar{
 	height: 150px;	
 	background-color: #275b8a;
+	position: relative:
 }
 
 .calendar-row{
@@ -30,6 +31,21 @@ body {
 
 .my-border-right{
 	border-right: 1px solid #bfd5db;
+}
+
+#controls-container {
+	border: 2px solid green;
+	height: 100%;
+	position: relative;
+	display: flex;
+}
+
+#controls-container .control{
+	border: 2px solid red;
+	width: 300px;
+	position: relative;
+	height: 100%;
+	flex: 0 0 10em;
 }
 
 #main{

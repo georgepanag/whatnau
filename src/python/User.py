@@ -1,7 +1,6 @@
 import mysql.connector
 import datetime
 from datetime import datetime
-from collections import namedtuple
 
 class User():
 

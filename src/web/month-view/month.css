@@ -33,6 +33,20 @@ body {
 	border-right: 1px solid #bfd5db;
 }
 
+.prev_month{
+	background-color : #b9c9c8;
+	color : white;
+}
+
+.next_month{
+	background-color : #b9c9c8;
+	color : white;
+}
+
+.today{
+	color : #0088ff;
+}
+
 #controls-container {
 	border: 2px solid green;
 	height: 100%;

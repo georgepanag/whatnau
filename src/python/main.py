@@ -21,10 +21,9 @@ def get_month_days():
    
 
 usr1 = User(1)
-print(usr1.showListEvents(mydb))
 mydb.close()
-#eel.init("../web")
-#eel.start('month-view/month.html', size=(1000, 562))
+eel.init("../web")
+eel.start('month-view/month.html', size=(1000, 562))
 
 def userExists(user_email,user_pass):
     val=(user_email,user_pass)

@@ -17,11 +17,6 @@ class User():
         self.corporation=corporation
         self.space=space'''
         
-
-
-        
-    
-    
     def showListEvents(self):#show user's events
         events=[]
         val=(self.userID)

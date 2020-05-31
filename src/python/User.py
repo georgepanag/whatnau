@@ -1,7 +1,7 @@
 import mysql.connector
 import datetime
 from datetime import datetime
-from collections import namedtuple
+
 
 class User():
 
@@ -29,12 +29,14 @@ class User():
         mycursor = mydb.cursor()
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(val,))
         myresult = mycursor.fetchall()
-        for coloumn in myresult:
+        '''for coloumn in myresult:
             for values in coloumn:
                 events.append(values)
                 #print(values)
-        #print(events)
-        return events
+        print(events)
+        return events'''
+        print(myresult)
+        return(myresult)
         mycursor.close()
         #mydb.close()
 
@@ -44,11 +46,12 @@ class User():
         datetimes=[]
         x=self.showListEvents(mydb)
         #get datetime instanses
-        print(s.max)
         for i in x:
-            if isinstance(i,datetime):
-                datetimes.append(i)
-        #print(datetimes)
+            #if isinstance(i,datetime):
+            datetimes.append(i[5])
+            datetimes.append(i[6])
+        print(datetimes)
+        print("hjhhkklhjhj")
         
         #check for overlapping events
         
@@ -74,9 +77,11 @@ class User():
             d+=2
             print(d)
         if(overlap!=0):
+            print("OVERLAP OCCURS")
             print(overlap)
             return 1
         else:
+            print("NO overlap")
             print(overlap)
             return 0
        
@@ -354,4 +359,36 @@ mydb= mysql.connector.connect(
         user="root",
         passwd="pasatempo64",
         database="whatnau")
+
+u_e={}#user-events
+user1=User(1)#Bobos
+user2=User(3)
+#user2.sendFriendReq("Bobos")
+#a=user1.addEvent("check conflict","arts","HIGH","2018-02-13 14:23:34","2018-02-13 18:23:34","NO")
+
+print("---------------------------------------------------")
+
+
+
+
+def userExists(user_email,user_pass,mydb):
+    val=(user_email,user_pass)
+    mycursor = mydb.cursor()
+    mycursor.execute("select userID from _user where email= %s and pass= %s ",val)
+    myresult = mycursor.fetchall()
+    if len(myresult)!=0:
+        print("Welcome user")
+        #print(myresult)
+        return True
+    else:
+        print("Invalid password or email address OR user doesn't exist\nplease try again")
+        #print(myresult)
+        return False
+    
+
+
+#userExists("bob@yahoo.gr","whatever")
+#user1.addEvent("check conflict","arts","HIGH","2018-02-13 08:23:34","2018-02-13 09:23:34","YES",mydb)
+#user1.showListEvents(mydb)
+user1.overlappingEvents('2018-02-13 12:06:00','2018-02-13 12:30:00')   
 mydb.close()

@@ -1,5 +1,6 @@
 drop database whatnau;
 create database whatnau;
+grant all privileges on whatnau.* to 'whatnau'@'localhost';
 use whatnau;
 
 create table _user(

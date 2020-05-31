@@ -2,9 +2,13 @@ let date = new Date();
 let month = date.getMonth() + 1;
 let month_day = date.getDate();
 let year = date.getYear();
-eel.get_month_days()(ret => populate_calendar_nums("#week-rows",ret));
+let calendar_data = eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
 
-function populate_calendar_nums(dom_id, days_list){
+function populate_calendar_data(dom_id, calendar_data){
+	let days_list = calendar_data.days
+	let user_events = calendar_data.events
+	console.log(days_list)
+	console.log(user_events)
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
 	for(week of weeks){
@@ -21,9 +25,16 @@ function populate_calendar_nums(dom_id, days_list){
 			if(days_list[idx][0] == month_day && days_list[idx][1] == month){
 				day.classList.add("today");
 			}
+			if(user_events[idx].length > 0){
+				let node = document.createElement("DIV");
+				let text_node = document.createTextNode(user_events[idx].length);
+				node.appendChild(text_node);
+				day.children[1].appendChild(node);
+			}
 			idx = idx+1;
 		}
 	}
+	return calendar_data;
 }
 
 function display_day_panel(){
@@ -40,3 +51,16 @@ function hide_day_panel(){
 	$("#big-trans-back-button").css("visibility","hidden");
 	$("#main").css("filter","none");
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

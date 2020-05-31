@@ -17,7 +17,7 @@ class Event():
         self.shared="NO"#shared'''
 
                 
-    def E_getter(self,col):
+    def E_getter(self,col,,mydb):
         get_list=[]
         c=str(col)
         mycursor1 = mydb.cursor()
@@ -36,7 +36,7 @@ class Event():
    
 
 
-    def E_setter(self,col,modification):
+    def E_setter(self,col,modification,,mydb):
         
 
         val=(str(modification))#,
@@ -67,7 +67,7 @@ class Event():
             self.setter(mode,change)
 
         #mporei kai ston User 
-    def deleteEvent(self):
+    def deleteEvent(self,mydb):
         val=(str(self.eventID))
         mycursor = mydb.cursor()
         mycursor.execute("delete from _event where eventID = %s",(val,))

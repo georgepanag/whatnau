@@ -1,10 +1,12 @@
 import mysql.connector
-
+import datetime
+from datetime import datetime
 
 class User():
 
     def __init__(self,userID):
         self.userID=userID
+        
         '''
         self.email=space
         self.usrname=usrname
@@ -20,9 +22,9 @@ class User():
         
     
     
-    def showListEvents(self):
+    def showListEvents(self):#show user's events
         events=[]
-        val = self.userID
+        val=(self.userID)
         mycursor = mydb.cursor()
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(val,))
         myresult = mycursor.fetchall()
@@ -30,14 +32,60 @@ class User():
             for values in coloumn:
                 events.append(values)
                 #print(values)
-        print(events)
+        #print(events)
         return events
         mycursor.close()
         #mydb.close()
-    
-    def showUrgEvents(self,userID):
+
+    def overlappingEvents(self,start_,end_):#checkConflicts
+        s=datetime.strptime(str(start_),'%Y-%m-%d %H:%M:%S')#convert into datetime for better manipulation
+        e=datetime.strptime(str(end_),'%Y-%m-%d %H:%M:%S')
+        datetimes=[]
+        x=self.showListEvents()
+        #get datetime instanses
+        print(s.max)
+        for i in x:
+            if isinstance(i,datetime):
+                datetimes.append(i)
+        #print(datetimes)
+        
+        #check for overlapping events
+        
+        d=0
+        overlap=0
+        #r1 = Range(start=start_, end=end_)
+        print(d)
+        while(d!=len(datetimes)):
+            #r2 = Range(start=datetimes[d], end=datetimes[d+1])
+            print("start="+str(datetimes[d])+"\nend="+str(datetimes[d+1]))
+            if not(((s < datetimes[d]) and (e < datetimes[d])) or ((s >datetimes[d+1]) and (e >datetimes[d+1]))):
+                print("overlap")
+                overlap+=1
+            else:
+                print("ok")
+                overlap+=0
+            '''latest_start = max(r1.start, r2.start)
+            earliest_end = min(r1.end, r2.end)
+            delta = (earliest_end - latest_start).days + 1
+            overlap = max(0, delta)
+            print(overlap)'''
+            
+            d+=2
+            print(d)
+        if(overlap!=0):
+            print(overlap)
+            return 1
+        else:
+            print(overlap)
+            return 0
+       
+
+
+
+        
+    def showUrgEvents(self):
         urg_events=[]
-        val=(userID)
+        val=(self.userID)
         mycursor = mydb.cursor()
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _event.importance='HIGH' and _user.userID= %s ",(val,))
         myresult = mycursor.fetchall()
@@ -45,19 +93,76 @@ class User():
             for values in coloumn:
                 urg_events.append(values)
                 #print(values)
-        #print(urg_events)
+        print(urg_events)
         return urg_events
         mycursor.close()
         #mydb.close()
+
+    #checks shared space availability for user with self.userID
+    def sharedSpaceFull(self):
+        val=(self.userID)
+        mycursor = mydb.cursor()
+        mycursor.execute("select shared_space from _user where userID= %s ",(val,))
+        myresult = mycursor.fetchall()
+        shared=myresult[0][0]
+        print(shared)
+        mycursor.close()
+        if(shared==5):#full space
+            return 1
+        if(shared==0):#avoids shared_space from getting negative values
+            return 2
+        else: #not full space
+            return 0
+        
+        
+       
         
     def addEvent(self,descr,_type,importance,start_date,_end_date,shared): #To userID to pairnei automata apo to User antikeimeno
-        val=(self.userID,descr,_type,importance,start_date,_end_date,shared)
-        mycursor = mydb.cursor()
-        mycursor.execute("insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values (%s, %s, %s, %s, %s, %s, %s)",val)
-        mydb.commit()               
-        print(mycursor.rowcount, "event created")
-        mycursor.close()
+        
+        if(shared=="YES"):
+            if(self.sharedSpaceFull()==1):
+                print("full shared space")
+            if(self.sharedSpaceFull()==2):
+                print("<im in elif> ")
+                
+                print("Shared event space is full.\nPLEASE REMOVE SOME SHARED EVENTS OR MODIFY THE CORRESPONDING LABEL<shared>\n")
+                
+            else:
+                print("<im in else> ")
+                
+                #(First)Check for event conflicts
+                conflict=self.overlappingEvents(start_date,_end_date)
+                if(conflict!=1):
+                    val1=(self.userID,descr,_type,importance,start_date,_end_date,shared)
+                    mycursor = mydb.cursor()
+                    mycursor.execute("insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values (%s, %s, %s, %s, %s, %s, %s)",val1)               
+                    print(mycursor.rowcount, "event created")
+                    mycursor.close()
+                   #updates shared_space every time a user shares an event
+                    val2=(self.userID)
+                    mycursor_1 = mydb.cursor()
+                    mycursor_1.execute("update _user set shared_space=shared_space - 1 where userID = %s ",(val2,))
+                    mydb.commit()
+                    print(mycursor.rowcount, "record(s) affected")
+                    mycursor_1.close()
 
+                else:
+                    print("conflict occcur")
+        if shared=="NO":
+            #(First)Check for event conflicts
+            conflict=self.overlappingEvents(start_date,_end_date)
+            if(conflict!=1):
+                val3=(self.userID,descr,_type,importance,start_date,_end_date,shared)
+                mycursor = mydb.cursor()
+                mycursor.execute("insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values (%s, %s, %s, %s, %s, %s, %s)",val3)
+                mydb.commit()               
+                print(mycursor.rowcount, "event created")
+                mycursor.close()
+            else:
+                print("conflict occcur")    
+
+        
+        
 
     def searchBuddy(self,buddy_usrname):
         val=(buddy_usrname)
@@ -243,18 +348,12 @@ class User():
             return f_events[i][2].minute
             
         
-    
-'''for testing
 mydb= mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="pasatempos64",
+        passwd="pasatempo64",
         database="whatnau")
 
-user1=User(1)#Bobos
-user2=User(3)
-#user2.sendFriendReq("Bobos")
-user1.showFriendsEvents()
+#code for testing goes here
+    
 mydb.close()
-'''
-

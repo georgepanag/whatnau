@@ -13,7 +13,7 @@ class Budget:
     def __init__(self,userID):
         self.userID=userID
 
-    def select_day(self,choose_day, choose_user):
+    def select_day(self,choose_day, choose_user,mydb):
         val=choose_day
         
         # σύνδεση με το gui
@@ -33,7 +33,7 @@ class Budget:
 
 
 
-    def credit_card_connection(self,userID):
+    def credit_card_connection(self,userID,mydb):
         val=userID
         mycursor = mydb.cursor()
         #mycursor.execute("select cr_cardID from _budget where _budget.userID=_user.userID and _user.userID=%s ",(val,))
@@ -56,7 +56,7 @@ class Budget:
         mycursor.close()
         #mydb.close()
 
-    def set_budget_upper_bound (self,userID,budget_upper_bound):
+    def set_budget_upper_bound (self,userID,budget_upper_bound,mydb):
         val=budget_upper_bound
         mycursor = mydb.cursor()
 
@@ -75,7 +75,7 @@ class Budget:
 #Here, the user adds the money he spent by his/her own.
 
 
-    def add_money_spent (self,userID,money_spent ):
+    def add_money_spent (self,userID,money_spent,mydb ):
         val= userID
         mycursor1 = mydb.cursor()
         
@@ -115,7 +115,7 @@ class Budget:
         mycursor2.close()
         #mydb.close()
 
-    def check_upper_bound( self,userID):
+    def check_upper_bound( self,userID,mydb):
         val=userID
         val2=userID 
         

@@ -22,7 +22,7 @@ class User():
         
     
     
-    def showListEvents(self):#show user's events
+    def showListEvents(self,mydb):#show user's events
         events=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -83,7 +83,7 @@ class User():
 
 
         
-    def showUrgEvents(self):
+    def showUrgEvents(self,mydb):
         urg_events=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -99,7 +99,7 @@ class User():
         #mydb.close()
 
     #checks shared space availability for user with self.userID
-    def sharedSpaceFull(self):
+    def sharedSpaceFull(self,mydb):
         val=(self.userID)
         mycursor = mydb.cursor()
         mycursor.execute("select shared_space from _user where userID= %s ",(val,))
@@ -117,7 +117,7 @@ class User():
         
        
         
-    def addEvent(self,descr,_type,importance,start_date,_end_date,shared): #To userID to pairnei automata apo to User antikeimeno
+    def addEvent(self,descr,_type,importance,start_date,_end_date,shared,mydb): #To userID to pairnei automata apo to User antikeimeno
         
         if(shared=="YES"):
             if(self.sharedSpaceFull()==1):
@@ -164,7 +164,7 @@ class User():
         
         
 
-    def searchBuddy(self,buddy_usrname):
+    def searchBuddy(self,buddy_usrname,mydb):
         val=(buddy_usrname)
         mycursor = mydb.cursor()
         mycursor.execute("select * from _user where usrname = %s ",(val,))
@@ -180,7 +180,7 @@ class User():
         mycursor.close()
         #mydb.close()
 
-    def sendFriendReq(self,to_usrname):
+    def sendFriendReq(self,to_usrname,mydb):
         find=self.searchBuddy(to_usrname)             
         
         if(find==1):
@@ -217,7 +217,7 @@ class User():
         #print("to user: "+str(to_user.userID))
 
         
-    def showFriendReq(self):
+    def showFriendReq(self,mydb):
             friend_req=[]
             val=(self.userID)
             mycursor = mydb.cursor()
@@ -231,7 +231,7 @@ class User():
             return friend_req
             mycursor.close()
 
-    def acceptFriendReq(self,from_usrname):
+    def acceptFriendReq(self,from_usrname,mydb):
         #Find -from_id- from -from_username-
         val=(from_usrname)
         mycursor = mydb.cursor()
@@ -251,7 +251,7 @@ class User():
         mycursor_1.close()
 
         #update table buddies
-        val_2 =(self.userID,from_userID)
+        val_2 =(self.userID,from_userID,mydb)
         mycursor_2 = mydb.cursor()
         mycursor_2.execute("insert into buddies (userID,buddy) values (%s, %s)",val_2)
         mydb.commit()
@@ -261,7 +261,7 @@ class User():
 
         
 
-    def denyFriendReq(self,from_usrname):
+    def denyFriendReq(self,from_usrname,mydb):
             #Find from_id from from_username
             val=(from_usrname)
             mycursor = mydb.cursor()
@@ -280,7 +280,7 @@ class User():
             mycursor_1.close()
 
 
-    def getBuddiesID(self):
+    def getBuddiesID(self,mydb):
         buddies_list=[]
         val=(self.userID)
         mycursor = mydb.cursor()
@@ -294,7 +294,7 @@ class User():
         return buddies_list
         mycursor.close()
         
-    def showFriendsEvents(self):
+    def showFriendsEvents(self,mydb):
         b=self.getBuddiesID()
         print(b)
         #v=("YES")

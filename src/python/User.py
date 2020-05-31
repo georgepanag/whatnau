@@ -1,7 +1,7 @@
 import mysql.connector
 import datetime
 from datetime import datetime
-
+from collections import namedtuple
 
 class User():
 
@@ -29,13 +29,12 @@ class User():
         mycursor = mydb.cursor()
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(val,))
         myresult = mycursor.fetchall()
-        '''for coloumn in myresult:
+        for coloumn in myresult:
             for values in coloumn:
                 events.append(values)
                 #print(values)
-        print(events)
-        return events'''
-        return(myresult)
+        #print(events)
+        return events
         mycursor.close()
         #mydb.close()
 
@@ -45,15 +44,18 @@ class User():
         datetimes=[]
         x=self.showListEvents(mydb)
         #get datetime instanses
+        print(s.max)
         for i in x:
-            #if isinstance(i,datetime):
-            datetimes.append(i[5])
-            datetimes.append(i[6])
+            if isinstance(i,datetime):
+                datetimes.append(i)
+        #print(datetimes)
+        
         #check for overlapping events
         
         d=0
         overlap=0
         #r1 = Range(start=start_, end=end_)
+        print(d)
         while(d!=len(datetimes)):
             #r2 = Range(start=datetimes[d], end=datetimes[d+1])
             print("start="+str(datetimes[d])+"\nend="+str(datetimes[d+1]))
@@ -72,11 +74,9 @@ class User():
             d+=2
             print(d)
         if(overlap!=0):
-            print("OVERLAP OCCURS")
             print(overlap)
             return 1
         else:
-            print("NO overlap")
             print(overlap)
             return 0
        
@@ -348,3 +348,10 @@ class User():
             return f_events[i][2].hour
             return f_events[i][2].minute
             
+        
+mydb= mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="pasatempo64",
+        database="whatnau")
+mydb.close()

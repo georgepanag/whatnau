@@ -1,6 +1,7 @@
 import mysql.connector
 import datetime
 from datetime import datetime
+from collections import namedtuple
 
 class User():
 
@@ -41,7 +42,7 @@ class User():
         s=datetime.strptime(str(start_),'%Y-%m-%d %H:%M:%S')#convert into datetime for better manipulation
         e=datetime.strptime(str(end_),'%Y-%m-%d %H:%M:%S')
         datetimes=[]
-        x=self.showListEvents()
+        x=self.showListEvents(mydb)
         #get datetime instanses
         print(s.max)
         for i in x:
@@ -120,9 +121,9 @@ class User():
     def addEvent(self,descr,_type,importance,start_date,_end_date,shared,mydb): #To userID to pairnei automata apo to User antikeimeno
         
         if(shared=="YES"):
-            if(self.sharedSpaceFull()==1):
+            if(self.sharedSpaceFull(mydb)==1):
                 print("full shared space")
-            if(self.sharedSpaceFull()==2):
+            if(self.sharedSpaceFull(mydb)==2):
                 print("<im in elif> ")
                 
                 print("Shared event space is full.\nPLEASE REMOVE SOME SHARED EVENTS OR MODIFY THE CORRESPONDING LABEL<shared>\n")
@@ -181,7 +182,7 @@ class User():
         #mydb.close()
 
     def sendFriendReq(self,to_usrname,mydb):
-        find=self.searchBuddy(to_usrname)             
+        find=self.searchBuddy(to_usrname,mydb)             
         
         if(find==1):
             #First find id of requested buddy
@@ -251,7 +252,7 @@ class User():
         mycursor_1.close()
 
         #update table buddies
-        val_2 =(self.userID,from_userID,mydb)
+        val_2 =(self.userID,from_userID)
         mycursor_2 = mydb.cursor()
         mycursor_2.execute("insert into buddies (userID,buddy) values (%s, %s)",val_2)
         mydb.commit()
@@ -295,7 +296,7 @@ class User():
         mycursor.close()
         
     def showFriendsEvents(self,mydb):
-        b=self.getBuddiesID()
+        b=self.getBuddiesID(mydb)
         print(b)
         #v=("YES")
         shared={}
@@ -353,7 +354,4 @@ mydb= mysql.connector.connect(
         user="root",
         passwd="pasatempo64",
         database="whatnau")
-
-#code for testing goes here
-    
 mydb.close()

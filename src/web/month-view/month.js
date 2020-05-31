@@ -2,13 +2,11 @@ let date = new Date();
 let month = date.getMonth() + 1;
 let month_day = date.getDate();
 let year = date.getYear();
-let calendar_data = eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
+let calendar_data = eel.get_stats()(ret => {populate_calendar_data("#week-rows",ret), console.log(ret))};
 
 function populate_calendar_data(dom_id, calendar_data){
 	let days_list = calendar_data.days
 	let user_events = calendar_data.events
-	console.log(days_list)
-	console.log(user_events)
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
 	for(week of weeks){

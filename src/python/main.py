@@ -16,22 +16,33 @@ usr1 = User(1)
 today = datetime.datetime.today()
 (c_year, c_month, c_day) = (today.year, today.month, today.day)
 
+def datetime_to_tuple(datetime):
+    x = (datetime.year,datetime.month,datetime.day,datetime.hour,datetime.minute,datetime.second)
+    return x
+
+def make_js_complient(variable):
+    if isinstance(variable,datetime.datetime):
+        return datetime_to_tuple(variable)
+    elif isinstance(variable,(tuple,set,list)): 
+        return [make_js_complient(x) for x in variable]
+    else:
+        return variable
+
 @eel.expose
 def get_stats(year=c_year, month=c_month):
     days_iter = calendar.Calendar().itermonthdates(year, month)
     days_list = []
     all_events = usr1.showListEvents(mydb)
-    user_events = []
     for day in days_iter:
-        days_list.append(day)
-        user_events.append(list(filter(lambda x:True if x[5].date() == day else False, all_events)))
+        
+        days_list.append(lambda day:(day.year,day.month,day.day))
                 
-    return {"days":days_list, "events":user_events}
+    return days_list
 
-print(get_stats())
 print("---------------------")
+print(get_stats())
 eel.init("../web")
-eel.start('month-view/month.html', size=(1000, 562))
+#eel.start('month-view/month.html', size=(1000, 562))
 
 mydb.close()
 def userExists(user_email,user_pass):

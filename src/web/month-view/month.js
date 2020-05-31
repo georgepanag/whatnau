@@ -2,19 +2,17 @@ let date = new Date();
 let month = date.getMonth() + 1;
 let month_day = date.getDate();
 let year = date.getYear();
-let calendar_data = eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
+eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
 
 function populate_calendar_data(dom_id, calendar_data){
 	let days_list = calendar_data.days
-	let user_events = calendar_data.events
-	console.log(days_list)
-	console.log(user_events)
+	let user_events = calendar_data.user_events
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
 	for(week of weeks){
 		let days = week.children;
 		for(day of days){
-			day.firstElementChild.textContent = days_list[idx][0]; 
+			day.firstElementChild.textContent = days_list[idx][2]; 
 			day.addEventListener("click", display_day_panel)
 			if(days_list[idx][1] < month){
 				day.classList.add("prev_month");

@@ -17,6 +17,11 @@ class User():
         self.corporation=corporation
         self.space=space'''
         
+
+
+        
+    
+    
     def showListEvents(self):#show user's events
         events=[]
         val=(self.userID)
@@ -343,6 +348,12 @@ class User():
             return f_events[i][2].minute
             
         
+mydb= mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="pasatempo64",
+        database="whatnau")
 
-
+#code for testing goes here
     
+mydb.close()

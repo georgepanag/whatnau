@@ -20,8 +20,7 @@ body {
 
 .calendar-shell{
 	width: 14.3%;
-	padding-top: 5px;
-	padding-left: 8px;
+	padding: 5px 8px 8px 5px;
 	transition: all 0.5s;
 }
 
@@ -47,6 +46,17 @@ body {
 	color : #0088ff;
 }
 
+.cell-grid{
+	border: 1px solid red;
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+.cell-grid > div{
+	border: 1px solid green;
+	text-align: center;
+}
+
 #controls-container {
 	border: 2px solid green;
 	height: 100%;
@@ -54,7 +64,7 @@ body {
 	display: flex;
 }
 
-#controls-container .control{
+#controls-container > .control{
 	border: 2px solid red;
 	width: 300px;
 	position: relative;

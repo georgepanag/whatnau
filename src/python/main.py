@@ -25,6 +25,8 @@ def make_js_complient(variable):
         return datetime_to_tuple(variable)
     elif isinstance(variable,(tuple,set,list)): 
         return [make_js_complient(x) for x in variable]
+    elif isinstance(variable,dict):
+        return {k : make_js_complient(v) for k, v in variable.items()}
     else:
         return variable
 
@@ -32,13 +34,13 @@ def make_js_complient(variable):
 def get_stats(year=c_year, month=c_month):
     days_iter = calendar.Calendar().itermonthdates(year, month)
     days_list = []
-    events_list = []
+    events_list = {} 
     all_events = usr1.showListEvents(mydb)
     for day in days_iter:
-        events_list.append(len(list(filter(lambda x :True if x[5].date() == day else False, all_events))))  
+        events_list.update( {day.strftime("%Y,%-m,%-d") : list(filter(lambda x :True if x[5].date() == day else False, all_events)) })  
         days_list.append((day.year,day.month,day.day))
                 
-    return {"days": days_list, "user_events" : events_list}
+    return {"days": days_list, "user_events" : make_js_complient(events_list)}
 
 
 print(get_stats())

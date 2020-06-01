@@ -2,19 +2,22 @@ let date = new Date();
 let month = date.getMonth() + 1;
 let month_day = date.getDate();
 let year = date.getYear();
+let user_events_obj = {};
 eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
+
 
 function populate_calendar_data(dom_id, calendar_data){
 	let days_list = calendar_data.days;
 	let user_events = calendar_data.user_events;
-	console.log(user_events);
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
+	console.log(user_events)
 	for(week of weeks){
 		let days = week.children;
 		for(day of days){
 			day.firstElementChild.textContent = days_list[idx][2]; 
-			day.addEventListener("click", display_day_panel)
+			day.addEventListener("click", display_day_panel);
+			day.setAttribute("id",days_list[idx] + "");
 			if(days_list[idx][1] < month){
 				day.classList.add("prev_month");
 			}
@@ -24,20 +27,18 @@ function populate_calendar_data(dom_id, calendar_data){
 			if(days_list[idx][0] == month_day && days_list[idx][1] == month){
 				day.classList.add("today");
 			}
-			if(user_events[idx] > 0){
-				let node = document.createElement("DIV");
-				let text_node = document.createTextNode(user_events[idx]);
-				node.appendChild(text_node);
-				day.children[1].appendChild(node);
-			}
+			console.log(days_list[idx]+"");
+			console.log(user_events[days_list[idx]+""]);
+			//if( l > 0){
+			//	let node = document.createElement("DIV");
+			//	let text_node = document.createTextNode(l);
+			//	node.appendChild(text_node);
+			//	day.children[1].appendChild(node);
+			//}
 			idx = idx+1;
 		}
 	}
-	return calendar_data;
-}
-
-function day_date_info{
-
+	user_events_obj = user_events; 
 }
 
 function display_day_panel(){

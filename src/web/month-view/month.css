@@ -92,14 +92,38 @@ body {
 	text-align: center;
 }
 
+#day-side-panel > div{
+	border: 1px solid red;
+	position: relative;
+	margin: 5px 5px 5px 5px;
+	
+}
+
+#day-date-info > div{
+	border: 1px solid orange;
+}
+
+#big-month-day {
+	font-size: 10em;
+	margin-left:150px;
+}
+
+#rest-month-info{
+	font-size: 4em;
+	text-align: left;
+	padding-top: 50px;
+
+}
+
 #day-side-panel{
 	width : 0px;
 	height: 100%;
 	left: 0;
 	position: fixed;
-	overflow-y: hidden;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	z-index : 2;
-	background-color : red;
+	background-color : #f5f9fa;
 	transition: 0.5s;
 }
 

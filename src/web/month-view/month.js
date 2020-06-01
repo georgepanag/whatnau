@@ -5,8 +5,9 @@ let year = date.getYear();
 eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
 
 function populate_calendar_data(dom_id, calendar_data){
-	let days_list = calendar_data.days
-	let user_events = calendar_data.user_events
+	let days_list = calendar_data.days;
+	let user_events = calendar_data.user_events;
+	console.log(user_events);
 	let idx = 0;
 	let weeks = $(dom_id).children().toArray(); 
 	for(week of weeks){
@@ -23,9 +24,9 @@ function populate_calendar_data(dom_id, calendar_data){
 			if(days_list[idx][0] == month_day && days_list[idx][1] == month){
 				day.classList.add("today");
 			}
-			if(user_events[idx].length > 0){
+			if(user_events[idx] > 0){
 				let node = document.createElement("DIV");
-				let text_node = document.createTextNode(user_events[idx].length);
+				let text_node = document.createTextNode(user_events[idx]);
 				node.appendChild(text_node);
 				day.children[1].appendChild(node);
 			}
@@ -35,9 +36,13 @@ function populate_calendar_data(dom_id, calendar_data){
 	return calendar_data;
 }
 
+function day_date_info{
+
+}
+
 function display_day_panel(){
 	$("#day-side-panel").css("width","600px");
-	$("#day-panel-date").text(this.firstElementChild.textContent);
+	$("#day-date-info").children()[0].textContent = this.firstElementChild.textContent;
 	$("#big-trans-back-button").css("visibility","visible")
 	$("#big-trans-back-button").click(hide_day_panel);
 	$("#main").css("filter","blur(0.5em)");

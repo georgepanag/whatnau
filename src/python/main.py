@@ -32,17 +32,18 @@ def make_js_complient(variable):
 def get_stats(year=c_year, month=c_month):
     days_iter = calendar.Calendar().itermonthdates(year, month)
     days_list = []
+    events_list = []
     all_events = usr1.showListEvents(mydb)
     for day in days_iter:
-        
-        days_list.append(lambda day:(day.year,day.month,day.day))
+        events_list.append(len(list(filter(lambda x :True if x[5].date() == day else False, all_events))))  
+        days_list.append((day.year,day.month,day.day))
                 
-    return days_list
+    return {"days": days_list, "user_events" : events_list}
 
-print("---------------------")
+
 print(get_stats())
 eel.init("../web")
-#eel.start('month-view/month.html', size=(1000, 562))
+eel.start('month-view/month.html', size=(1000, 562))
 
 mydb.close()
 def userExists(user_email,user_pass):

@@ -5,7 +5,13 @@ let year = date.getYear();
 let user_events_obj = {};
 let months = ["January","February","March","April","May","June","July",
             "August","September","October","November","December"];
+
 eel.get_stats()(ret => populate_calendar_data("#week-rows",ret));
+
+for(let i=0;i<24;i++){
+	let time = i.toString().padStart(2,'0')+":"+"00";
+	$("#day-gantt").append("<div id="+time+"><h>"+time+"</h></div>");
+}
 
 
 function populate_calendar_data(dom_id, calendar_data){
@@ -28,7 +34,7 @@ function populate_calendar_data(dom_id, calendar_data){
 			if(days_list[idx][0] == month_day && days_list[idx][1] == month){
 				day.classList.add("today");
 			}
-			let l = user_events[days_list[idx]+""].length
+			let l = user_events[days_list[idx]+""]
 			if( l > 0){
 				let node = document.createElement("DIV");
 				let text_node = document.createTextNode(l);
@@ -59,11 +65,9 @@ function hide_day_panel(){
 function update_date_info(date){
 	x = date.split(",");
 	$("#day-date-info").children()[0].textContent = x[2];
-	$("#day-date-info").children()[1].firstElementChild.textContent = months[x[1]];
+	$("#day-date-info").children()[1].firstElementChild.textContent = months[x[1]-1];
 	$("#day-date-info").children()[1].lastElementChild.textContent = x[0];
 }
-
-
 
 
 

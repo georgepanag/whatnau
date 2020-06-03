@@ -1,4 +1,4 @@
-bbody, html {
+body, html {
 	height: 100%;
 	width: 100%;
 }
@@ -93,7 +93,6 @@ body {
 }
 
 #day-side-panel > div{
-	border: 1px solid red;
 	position: relative;
 	margin: 5px 5px 5px 5px;
 	
@@ -113,6 +112,11 @@ body {
 	text-align: left;
 	padding-top: 40px;
 
+}
+
+#day-gantt > div{
+	border-top: 1px solid white;
+	height: 50px;
 }
 
 #day-side-panel{

@@ -1,0 +1,2 @@
+Eel==0.12.4
+mysql_connector_repackaged==0.3.1

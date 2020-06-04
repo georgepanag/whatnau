@@ -10,12 +10,25 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 		<script src="../dependecies/js/bootstrap.min.js"></script>
 		<script src="../eel.js" type="text/javascript"></script>
-		<script src="./month.js" type="text/javascript"></script>
+		<script src="./month.js" type="text/javascript" defer></script>
 	</head>
 
 	<body>
 		<div id="day-side-panel">
-			<h1 class="text-center" id="day-panel-date">gggggg</h1>
+			<div id="day-date-info" class="d-flex">
+				<div id="big-month-day">g</div>
+				<div id="rest-month-info">
+					<h1>Month</h1>
+					<h1>Year</h1>
+				</div>
+			</div>
+			<div id="day-gantt">
+				<svg id="day-svg">
+					<line x1="80" y1="100" x2="80" y2="150" stroke-linecap="round" style="stroke:rgb(255,0,0);stroke-width:7;"/>
+					<circle cx="80" cy="100" r="7" fill="red"/>
+				</svg>
+
+			</div>
 		</div>
 		<div id="big-trans-back-button"></div>
 		<div id="main">
@@ -29,7 +42,7 @@
 					</div>
 			</div>
 			<div id="month-calendar">
-				<div id="day-tags" class="d-flex justify-content-around">
+				<div id="day-tags">
 					<div class="day-tag-container"><h3>Monday</h3></div>
 					<div class="day-tag-container"><h3>Thuesday</h3></div>
 					<div class="day-tag-container"><h3>Wednesday</h3></div>

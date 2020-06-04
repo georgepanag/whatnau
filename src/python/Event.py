@@ -7,17 +7,18 @@ class Event():
     
     
 
-    def __init__(self,eventID):#,importance,descr,_type,time_start,time_end,is_shared):
+    def __init__(self,eventID,userID,descr="No descr",_type="undefined",importance="HIGH",start_date=None,end_date=None,shared="NO"):#,importance,descr,_type,time_start,time_end,is_shared):
         self.eventID=eventID
-        '''self.importance="HIGH"#importance
-        self.descr="No descr"#descr
-        self._type="undefined"#_type
-        self.start_date=None#"0000-00-00 00:00:00"#time_start
-        self._end_date=None#"0000-00-00 00:00:00"#time_end
-        self.shared="NO"#shared'''
+        self.userID=userID
+        self.descr=descr
+        self._type=_type
+        self.importance=importance
+        self.start_date=start_date
+        self._end_date=end_date
+        self.shared=shared
 
                 
-    def E_getter(self,col,,mydb):
+    def E_getter(self,col,mydb):
         get_list=[]
         c=str(col)
         mycursor1 = mydb.cursor()
@@ -36,7 +37,7 @@ class Event():
    
 
 
-    def E_setter(self,col,modification,,mydb):
+    def E_setter(self,col,modification,mydb):
         
 
         val=(str(modification))#,
@@ -75,38 +76,4 @@ class Event():
         print(mycursor.rowcount, "record(s) affected")
         mycursor.close()
 
-
-    
-
-#for testing
-mydb= mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="pasatempo64",
-        database="whatnau")
-e=Event(1,importance="LOW")
-print(e.importance)
-'''
-y="2020"
-m="05"
-d="8"
-h="16"
-mi="45"
-s="00"
-
-from datetime import datetime
-#converts to datetime
-req_date = datetime(year=int(y),
-                month=int(m),
-                day=int(d),
-                hour=int(h),
-                minute=int(mi),
-                second=int(s))
-
-
-
-a=Event(1)
-a.getter("descr")
-'''
-mydb.close()     
 

@@ -1,12 +1,17 @@
 import mysql.connector
 import datetime
+from Event import Event
 from datetime import datetime
+<<<<<<< HEAD
 
+=======
+>>>>>>> yiorgos
 
 class User():
 
     def __init__(self,userID):
         self.userID=userID
+        self.events=[]
         
         '''
         self.email=space
@@ -19,9 +24,14 @@ class User():
         self.space=space'''
         
 
-
-        
-    
+    def getEventsFromDB(self, mydb):
+        events=[]
+        mycursor = mydb.cursor()
+        mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(self.userID,))
+        myresult = mycursor.fetchall()
+        for evnt in myresult:
+            self.events.append(Event(evnt[0],evnt[1],evnt[2],evnt[3],evnt[4],evnt[5],evnt[6]))
+        mycursor.close()
     
     def showListEvents(self,mydb):#show user's events
         events=[]
@@ -50,23 +60,23 @@ class User():
             #if isinstance(i,datetime):
             datetimes.append(i[5])
             datetimes.append(i[6])
+<<<<<<< HEAD
         print(datetimes)
         print("hjhhkklhjhj")
+=======
+>>>>>>> yiorgos
         
         #check for overlapping events
         
         d=0
         overlap=0
         #r1 = Range(start=start_, end=end_)
-        print(d)
         while(d!=len(datetimes)):
             #r2 = Range(start=datetimes[d], end=datetimes[d+1])
             print("start="+str(datetimes[d])+"\nend="+str(datetimes[d+1]))
             if not(((s < datetimes[d]) and (e < datetimes[d])) or ((s >datetimes[d+1]) and (e >datetimes[d+1]))):
-                print("overlap")
                 overlap+=1
             else:
-                print("ok")
                 overlap+=0
             '''latest_start = max(r1.start, r2.start)
             earliest_end = min(r1.end, r2.end)
@@ -75,10 +85,12 @@ class User():
             print(overlap)'''
             
             d+=2
-            print(d)
         if(overlap!=0):
+<<<<<<< HEAD
             print("OVERLAP OCCURS")
             print(overlap)
+=======
+>>>>>>> yiorgos
             return 1
         else:
             print("NO overlap")
@@ -352,3 +364,8 @@ class User():
             return f_events[i][2].day
             return f_events[i][2].hour
             return f_events[i][2].minute
+<<<<<<< HEAD
+=======
+            
+        
+>>>>>>> yiorgos

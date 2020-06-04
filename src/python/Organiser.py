@@ -12,7 +12,7 @@ class Organiser():
 
 
     #for uploading a new event
-    def uploadEvent(self, descr, category, entrance_value, start_date, end_date, target_aud)
+    def uploadEvent(self, descr, category, entrance_value, start_date, end_date, target_aud):
         val=(self.promotedID, descr, category, entrance_value, start_date, end_date, target_aud)
         mycursor = mydb.cursor()            
         mycursor.execute("insert_into promoted_event(promotedID, descr, category, entrance_value, start_date, end_date, target_aud) values (%s, %s, %s, %s, %s, %s, %s)", val)

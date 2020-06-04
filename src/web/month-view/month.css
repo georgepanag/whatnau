@@ -42,7 +42,7 @@ body {
 	color : white;
 }
 
-.today{
+.today h2{
 	color : #0088ff;
 }
 
@@ -86,10 +86,60 @@ body {
 
 #day-tags{
 	padding: 0.5em;
+	display: flex;
 }
 
 #day-tags .day-tag-container{
 	text-align: center;
+	justify-content: center;
+	flex: 1 1 0;
+}
+
+#day-side-panel > div{
+	position: relative;
+	margin: 5px 5px 5px 5px;
+	border: 1px solid red;	
+}
+
+#day-date-info{
+	color: white;
+}
+
+#day-date-info > div{
+	border: 1px solid orange;
+}
+
+#big-month-day {
+	font-size: 8em;
+	margin-left:150px;
+}
+
+#rest-month-info{
+	font-size: 4em;
+	text-align: left;
+	padding-top: 40px;
+
+}
+
+#day-gannt{
+	position: relative;
+}
+
+#day-gantt > div{
+	border-top: 1px solid #5c9bff;
+	height: 50px;
+	color: #5c9bff;
+	position: relative;
+	z-index: 1;
+}
+
+#day-svg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	left:0;
+	z-index:3;
 }
 
 #day-side-panel{
@@ -97,10 +147,14 @@ body {
 	height: 100%;
 	left: 0;
 	position: fixed;
-	overflow-y: hidden;
+	overflow-y: scroll;
 	z-index : 2;
-	background-color : red;
+	background-color : #0c2c5e;
 	transition: 0.5s;
+}
+
+#day-side-panel::-webkit-scrollbar{
+	display: none;
 }
 
 #big-trans-back-button{

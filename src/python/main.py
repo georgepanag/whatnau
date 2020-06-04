@@ -1,6 +1,7 @@
 import eel
 import calendar
 import datetime
+import time
 from User import User
 import mysql.connector
 
@@ -42,17 +43,44 @@ def get_stats(year=c_year, month=c_month):
     events_list = {} 
     all_events = usr1.events
     for day in days_iter:
-        events_list.update( {day.strftime("%Y,%-m,%-d") : len(list(filter(lambda x :True if x.start_date.date() == day else False, all_events))) })
+        events_list.update( {day.strftime("%Y,%-m,%-d") : len(list(filter(lambda evnt :True if (evnt.start_date.date() == day) or (evnt.start_date.date() <= day and day <= evnt._end_date.date())else False, all_events))) })
         days_list.append((day.year,day.month,day.day))
 
     return {"days": days_list, "user_events" : events_list}
 
-def get_day_events(year=c_year, month=c_month, day=c_day):
-    day_start = datetime.datetime(year,month,day)
+def get_day_events_array(year=c_year, month=c_month, day=c_day, user = usr1):
+
+    def append_if_fits(slot, evnt):
+        if len(slot) == 0:
+            slot.append(evnt)
+            return True
+        else:
+            for known in slot: 
+                if not ((evnt._end_date + datetime.timedelta(minutes=10) <= known.start_date) and (known._end_date + datetime.timedelta(minutes=10) <= evnt.start_date)):
+                    return False
+            slot.append(evnt)
+            return True
+
+    def fits_in_any_slot(day_events_array, array):
+            for slot in day_events_array:
+                if(append_if_fits(slot, evnt)):
+                    return True
+            
+            return False
+
+
+
+    day_start = datetime.date(year,month,day)
     day_events = []
-    for evnt in usr1.events:
-        if evnt.start_date <= day_start and day_start <= evnt.end_date:
-            day_start.append(evnt);
+    day_events_array = [[]]
+    for evnt in user.events:
+        if (evnt.start_date.date() == day_start) or (evnt.start_date.date() <= day_start and day_start <= evnt._end_date.date()):
+            
+                
+
+
+    
+    return day_events_array
 
 
 def userExists(user_email,user_pass):
@@ -69,9 +97,8 @@ def userExists(user_email,user_pass):
         #print(myresult)
         return False
 
- #-------------------------------
-for e in usr1.events:
-     print(e.start_date.date())
+#-------------------------------
+#get_day_events_array(2020,6,5)
 
 eel.init("../web")
 eel.start('month-view/month.html', size=(1000, 562))

@@ -7,8 +7,9 @@ class Event():
     
     
 
-    def __init__(self,eventID,descr="No descr",_type="undefined",importance="HIGH",start_date=None,end_date=None,shared="NO"):#,importance,descr,_type,time_start,time_end,is_shared):
+    def __init__(self,eventID,userID,descr="No descr",_type="undefined",importance="HIGH",start_date=None,end_date=None,shared="NO"):#,importance,descr,_type,time_start,time_end,is_shared):
         self.eventID=eventID
+        self.userID=userID
         self.descr=descr
         self._type=_type
         self.importance=importance

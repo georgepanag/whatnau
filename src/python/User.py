@@ -26,11 +26,8 @@ class User():
         mycursor.execute("select _event.* from _event,_user where _user.userID =_event.userID and _user.userID= %s ",(self.userID,))
         myresult = mycursor.fetchall()
         for evnt in myresult:
-            self.events.append(Event(evnt[0],evnt[2],evnt[3],evnt[4],evnt[5],evnt[6]))
+            self.events.append(Event(evnt[0],evnt[1],evnt[2],evnt[3],evnt[4],evnt[5],evnt[6]))
         mycursor.close()
-        
-        
-    
     
     def showListEvents(self,mydb):#show user's events
         events=[]

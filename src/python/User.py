@@ -369,3 +369,19 @@ class User():
             
         
 >>>>>>> yiorgos
+
+    def confirmAsParticipant(self,promotedID,mydb):
+        val =(self.userID,promotedID)
+        mycursor = mydb.cursor()
+        mycursor.execute("insert into participants(userID,promotedID) values (%s, %s)",val)
+        mydb.commit()
+        print(mycursor.rowcount, "Add to participants...")
+        mycursor.close()
+
+    def AddCritique(self,promotedID,critique,mydb):
+        val=(critique,self.userID,promotedID)
+        mycursor = mydb.cursor()
+        mycursor.execute("update participants set review_score= %s  where userID= %s and promotedID= %s",val)
+        mydb.commit()
+        print(mycursor.rowcount, "record(s) affected")
+        mycursor.close()

@@ -1,7 +1,6 @@
 import eel
 import calendar
 import datetime
-import time
 from User import User
 import mysql.connector
 
@@ -56,12 +55,12 @@ def get_day_events_array(year=c_year, month=c_month, day=c_day, user = usr1):
             return True
         else:
             for known in slot: 
-                if not ((evnt._end_date + datetime.timedelta(minutes=10) <= known.start_date) and (known._end_date + datetime.timedelta(minutes=10) <= evnt.start_date)):
+                if not ((evnt._end_date + datetime.timedelta(minutes=10) <= known.start_date) or (known._end_date + datetime.timedelta(minutes=10) <= evnt.start_date)):
                     return False
             slot.append(evnt)
             return True
 
-    def fits_in_any_slot(day_events_array, array):
+    def fits_in_any_slot(day_events_array, evnt):
             for slot in day_events_array:
                 if(append_if_fits(slot, evnt)):
                     return True
@@ -71,17 +70,14 @@ def get_day_events_array(year=c_year, month=c_month, day=c_day, user = usr1):
 
 
     day_start = datetime.date(year,month,day)
-    day_events = []
     day_events_array = [[]]
     for evnt in user.events:
         if (evnt.start_date.date() == day_start) or (evnt.start_date.date() <= day_start and day_start <= evnt._end_date.date()):
-            
+           print(str(evnt.start_date) + "---" + str(evnt._end_date))
+           if (not fits_in_any_slot(day_events_array,evnt)):
+               day_events_array.append([evnt])
                 
-
-
-    
     return day_events_array
-
 
 def userExists(user_email,user_pass):
     val=(user_email,user_pass)
@@ -98,12 +94,11 @@ def userExists(user_email,user_pass):
         return False
 
 #-------------------------------
-#get_day_events_array(2020,6,5)
+print("=-_-=-_-=-_-=")
+print(get_day_events_array(2020,6,5))
 
 eel.init("../web")
 eel.start('month-view/month.html', size=(1000, 562))
 
 
 mydb.close()
-
-

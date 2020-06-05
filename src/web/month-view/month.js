@@ -69,6 +69,10 @@ function update_date_info(date){
 	$("#day-date-info").children()[1].lastElementChild.textContent = x[0];
 }
 
+function draw_gannt(){
+
+	
+}
 
 
 

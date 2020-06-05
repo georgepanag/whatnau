@@ -50,22 +50,22 @@ class Event():
     
     def AlterEvent(self,mode,change): #mode can be importance,descr,_type,time_start,time_end,is_shared except eventID
         if mode=="descr":              #change is the new modificatio a.k.a update on a table 
-            self.setter(mode,change)
+            self.E_setter(mode,change)
             
         if mode =="_type":
-            self.setter(mode,change)
+            self.E_setter(mode,change)
                         
         if mode =="shared":
-            self.setter(mode,change)
+            self.E_setter(mode,change)
 
         if mode =="importance":
-            self.setter(mode,change)    
+            self.E_setter(mode,change)    
 
         if mode=="start_date":
-            self.setter(mode,change)
+            self.E_setter(mode,change)
     
         if mode=="_end_date":
-            self.setter(mode,change)
+            self.E_setter(mode,change)
 
         #mporei kai ston User 
     def deleteEvent(self,mydb):

@@ -11,7 +11,7 @@ email varchar(128),
 usrname varchar(128),
 pass varchar(128),
 cr_cardID bigint(20)  ,
-interests set("sports","music","theater","cinema","politics","underground","festivals","fashion","undefined") default "undefined",
+interests set("sports","music","arts","theater","cinema","politics","underground","festivals","fashion","undefined") default "undefined",
 gender enum("M","F"),/*M=male , F=female*/
 _type enum("O","SU"),/*O=organiser , SU=simple_user*/
 job tinytext default NULL, 

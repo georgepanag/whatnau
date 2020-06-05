@@ -69,7 +69,7 @@ create table promoted_event( /*from organiser*/
 promotedID bigint(16) not null auto_increment,
 userID bigint(16) not null,
 descr text,
-category set("sports","music","theater","cinema","politics","underground","festivals","fashion","undefined") default "undefined",
+category set("sports","music","arts","cinema","politics","underground","festivals","fashion","undefined") default "undefined",
 entrance_value bigint(16),
 target_aud enum("to all","only fans") default "to all",
 start_date datetime,

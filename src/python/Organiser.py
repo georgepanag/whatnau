@@ -21,7 +21,7 @@ class Organiser():
         mycursor.close()
 
     #for changing events information
-    def AlterEvent(self, onefield, changing):
+    def alterUploadingEvent(self, onefield, changing):
         if onefield == "descr":
             self.setter(onefield, changing)
         if onefield == "category":

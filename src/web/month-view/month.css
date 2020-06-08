@@ -85,7 +85,6 @@ body {
 }
 
 #day-tags{
-	padding: 0.5em;
 	display: flex;
 }
 
@@ -125,9 +124,9 @@ body {
 	position: relative;
 }
 
-#day-gantt > div{
+.time-slot{
 	border-top: 1px solid #5c9bff;
-	height: 50px;
+	height: 60px;
 	color: #5c9bff;
 	position: relative;
 	z-index: 1;
@@ -153,6 +152,27 @@ body {
 	transition: 0.5s;
 }
 
+
+#event-side-panel{
+	width : 0px;
+	height: 100%;
+	right:0;
+	position: fixed;
+	overflow-y: scroll;
+	z-index : 2;
+	background-color : #0963b3;
+	transition: 0.5s;
+	padding: 3px;
+}
+
+#event-side-panel > div{
+	border: 1px solid red;
+}
+
+#event-side-panel::-webkit-scrollbar{
+	display: none;
+}
+
 #day-side-panel::-webkit-scrollbar{
 	display: none;
 }
@@ -163,13 +183,10 @@ body {
 	height: 100%;
 	overflow-y: hidden;
 	right:0;
-	left: 600px;
+	left: 500px;
 	z-index: 3;
 	top: 0;
 }
-
-
-
 
 
 

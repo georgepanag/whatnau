@@ -36,18 +36,18 @@ def make_js_complient(variable):
 
 
 @eel.expose
-def get_stats(year=c_year, month=c_month):
+def get_stats(year, month,user=usr1):
     days_iter = calendar.Calendar().itermonthdates(year, month)
     days_list = []
     events_list = {} 
-    all_events = usr1.events
+    all_events = user.events
     for day in days_iter:
         events_list.update( {day.strftime("%Y,%-m,%-d") : len(list(filter(lambda evnt :True if (evnt.start_date.date() == day) or (evnt.start_date.date() <= day and day <= evnt._end_date.date())else False, all_events))) })
         days_list.append((day.year,day.month,day.day))
 
     return {"days": days_list, "user_events" : events_list}
 
-def get_day_events_array(year=c_year, month=c_month, day=c_day, user = usr1):
+def get_day_events_array(year,month,day, user = usr1):
 
     def append_if_fits(slot, evnt):
         if len(slot) == 0:
@@ -67,17 +67,23 @@ def get_day_events_array(year=c_year, month=c_month, day=c_day, user = usr1):
             
             return False
 
-
-
     day_start = datetime.date(year,month,day)
     day_events_array = [[]]
     for evnt in user.events:
         if (evnt.start_date.date() == day_start) or (evnt.start_date.date() <= day_start and day_start <= evnt._end_date.date()):
-           print(str(evnt.start_date) + "---" + str(evnt._end_date))
            if (not fits_in_any_slot(day_events_array,evnt)):
                day_events_array.append([evnt])
                 
     return day_events_array
+
+@eel.expose
+def package_events_array_for_js(year,month,day,user = usr1):
+    events_array = get_day_events_array(year,month,day,user)
+    new_events_array = []
+    for slot in events_array:
+        new_events_array.append(list(map(lambda evnt : [evnt.eventID,evnt.descr,evnt._type,evnt.importance,evnt.start_date,evnt._end_date],slot)))
+    return make_js_complient(new_events_array)
+
 
 def userExists(user_email,user_pass):
     val=(user_email,user_pass)
@@ -94,11 +100,8 @@ def userExists(user_email,user_pass):
         return False
 
 #-------------------------------
-print("=-_-=-_-=-_-=")
-print(get_day_events_array(2020,6,5))
 
 eel.init("../web")
-eel.start('month-view/month.html', size=(1000, 562))
-
+eel.start('month-view/month.html', size=(1200, 800))
 
 mydb.close()

@@ -86,14 +86,13 @@ constraint PROMOTED_USER foreign key (userID) references _user(userID) on delete
 create table participants(
 userID bigint(16) not null,
 promotedID bigint(16) not null,
-comments text,
+review_score enum("no review","1","2","3","4","5","6","7","8","9","10") default "no review",
 primary key(userID,promotedID),
 constraint PARTICIPANTS_USER foreign key (userID) references _user(userID) on delete cascade on update cascade,
 constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_event(promotedID) on delete cascade on update cascade
 
 
 )engine=InnoDB;
-
 
 
 

@@ -20,7 +20,21 @@ class Organiser():
         print(mycursor.rowcount, "new event uploaded")
         mycursor.close()
 
-
+    #for changing events information
+    def AlterEvent(self, onefield, changing):
+        if onefield == "descr":
+            self.setter(onefield, changing)
+        if onefield == "category":
+            self.setter(onefield, changing)
+        if onefield == "entrance_value":
+            self.setter(onefield, changing)
+        if onefield == "target_aud":
+            self.setter(onefield, changing)
+        if onefield == "start_date":
+            self.setter(onefield, changing)
+        if onefield == "end_date":
+            self.setter(onefield, changing)
+    
     #for deleting an existing uploading event
     def deleteUploadingEvent(self):
         val=(str(self.promotedID))

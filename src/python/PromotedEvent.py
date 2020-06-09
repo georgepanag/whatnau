@@ -84,33 +84,3 @@ class PromotedEvent(Event):
 
     
 
-#for testing
-mydb= mysql.connector.connect(
-           host="localhost",
-            user="root",
-            passwd="pasatempo64",
-            database="whatnau")
-'''except mysql.connector.Error as err:
-    print("Something went wrong: {}".format(err))
-'''
-y="2020"
-m="05"
-d="8"
-h="16"
-mi="45"
-s="00"
-
-from datetime import datetime
-#converts to datetime
-req_date = datetime(year=int(y),
-                month=int(m),
-                day=int(d),
-                hour=int(h),
-                minute=int(mi),
-                second=int(s))
-
-e=PromotedEvent(1,1)
-e.E_getter("descr",mydb)
-#E_getter <-Event
-
-mydb.close()     

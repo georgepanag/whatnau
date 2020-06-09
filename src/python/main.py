@@ -7,13 +7,12 @@ import mysql.connector
 #connect to database
 mydb= mysql.connector.connect(
         host="localhost",
-        user="whatnau",
-        passwd="pasatempos64",
+        user="root",
+        passwd="ubuntubu754",
         database="whatnau")
 
 #creare user object and download it's events
 usr1 = User(1)
-
 #figure out todays date
 today = datetime.datetime.today()
 (c_year, c_month, c_day) = (today.year, today.month, today.day)

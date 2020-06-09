@@ -129,7 +129,8 @@ class User():
         print(myresult)
         mycursor.close()
                          
-     def get_promoted_events_only_fans(self,category,mydb):
+
+    def get_promoted_events_only_fans(self,category,mydb):
         val =(category)
         
         mycursor = mydb.cursor()

@@ -74,6 +74,7 @@ entrance_value bigint(16),
 target_aud enum("to all","only fans") default "to all",
 start_date datetime,
 end_date datetime,
+location text,
 
 primary key(promotedID),
 constraint PROMOTED_USER foreign key (userID) references _user(userID) on delete cascade on update cascade
@@ -96,6 +97,12 @@ constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_ev
 
 
 
+
+
+insert into promoted_event(userID,descr,category,entrance_value,target_aud,start_date,end_date,location) values (2,"test","arts,underground",10,"only fans","2020-02-13 21:00:00","2020-02-13 22:00:00","Patra"),
+(2,"test2","musical",10,"to all","2020-02-14 11:00:00","2020-02-14 12:00:00","Athens"),
+(3,"test3","sports",0,"to all","2020-03-13 15:00:00","2020-03-13 16:00:00","Thessaloniki"),
+(4,"test4","arts",10,"only fans","2020-02-13 21:00:00","2020-02-13 22:00:00","Crete");
 
 
 

@@ -7,9 +7,24 @@ import mysql.connector
 class Organiser():
     
 
-    def __init__(self, promotedID):
+    def __init__(self, promotedID,userID):
         self.promotedID=promotedID
+        self.userID=userID
+        promoteds=[]
 
+    def getPromotedFromDB(self, mydb):
+        val=(str(self.userID))
+        promoteds=[]
+        mycursor = mydb.cursor()
+        mycursor.execute("select * from promoted_event where userID = %s ",(val,))
+        myresult = mycursor.fetchall()
+        
+        for evnt in myresult:
+            self.promoteds.append(PromotedEvent(evnt[0],evnt[1],evnt[2],evnt[3],evnt[4],evnt[5],evnt[6],evnt[7],evnt[8]))
+        mycursor.close()
+    
+        
+        
 
     #for uploading a new event
     def uploadEvent(self, descr, category, entrance_value, start_date, end_date, target_aud):

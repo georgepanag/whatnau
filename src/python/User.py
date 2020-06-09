@@ -132,7 +132,7 @@ class User():
         else: #not full space
             return 0
         
-     def get_promoted_events(self,category,mydb):
+     def get_promoted_events_only_fans(self,category,mydb):
         val =(category)
         
         mycursor = mydb.cursor()

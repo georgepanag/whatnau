@@ -134,7 +134,7 @@ class User():
       
     def promotedEventsToAll(self, mydb):
         mycursor = mydb.cursor()
-        mycursor.execute("select descr, category, entrance_value, target_aud, start_date, end_date from promoted_event where target_aud="to all")
+        mycursor.execute("select descr, category, entrance_value, target_aud, start_date, end_date from promoted_event where target_aud='to all'")
         myresult = mycursor.fetchall()
         print(myresult)
         mycursor.close()

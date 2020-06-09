@@ -11,6 +11,12 @@ body {
 	height: 150px;	
 	background-color: #275b8a;
 	position: relative:
+	color: white;
+}
+
+#top-bar >div{
+	margin: auto;
+	color: white;
 }
 
 .calendar-row{
@@ -47,25 +53,21 @@ body {
 }
 
 .cell-grid{
-	border: 1px solid red;
 	display: grid;
 	grid-template-columns: 50% 50%;
 }
 
 .cell-grid > div{
-	border: 1px solid green;
 	text-align: center;
 }
 
 #controls-container {
-	border: 2px solid green;
 	height: 100%;
 	position: relative;
 	display: flex;
 }
 
 #controls-container > .control{
-	border: 2px solid red;
 	width: 300px;
 	position: relative;
 	height: 100%;
@@ -94,18 +96,11 @@ body {
 	flex: 1 1 0;
 }
 
-#day-side-panel > div{
-	position: relative;
-	margin: 5px 5px 5px 5px;
-	border: 1px solid red;	
-}
-
 #day-date-info{
 	color: white;
 }
 
 #day-date-info > div{
-	border: 1px solid orange;
 }
 
 #big-month-day {
@@ -147,11 +142,44 @@ body {
 	left: 0;
 	position: fixed;
 	overflow-y: scroll;
-	z-index : 2;
+	z-index : 4;
 	background-color : #0c2c5e;
 	transition: 0.5s;
 }
 
+#day-side-panel > div{
+	position: relative;
+	margin: 5px 5px 5px 5px;
+}
+
+
+#edit-event-panel{
+	width : 0px;
+	height: 100%;
+	right:0;
+	position: fixed;
+	overflow-y: scroll;
+	z-index : 7;
+	background-color : #3d1659;
+	transition: 0.5s;
+	color: white;
+}
+
+#edit-event-panel > div{
+	width: 95%;
+	margin: 5px; 
+	justify-content: space-around;
+}
+
+#edit-event-panel::-webkit-scrollbar{
+	display: none;
+}
+
+.edit-time{
+	display:flex;
+	justify-content: center;
+	padding: 5px;
+}
 
 #event-side-panel{
 	width : 0px;
@@ -159,18 +187,42 @@ body {
 	right:0;
 	position: fixed;
 	overflow-y: scroll;
-	z-index : 2;
+	z-index : 4;
 	background-color : #0963b3;
 	transition: 0.5s;
-	padding: 3px;
+	color: white;
 }
 
 #event-side-panel > div{
-	border: 1px solid red;
+	width: 95%;
+	margin: 5px; 
 }
 
 #event-side-panel::-webkit-scrollbar{
 	display: none;
+}
+
+#edit-text{
+	width:100%;
+}
+
+.event-time{
+	display: flex;
+}
+
+.actions{
+	filter: invert(100%) !important;
+	position: absolute;
+	width:100%;
+	bottom: 20px;
+	justify-content:space-around;
+	height: 100px;	
+	display: flex;
+}
+
+.actions > img:hover{
+	height: 100px;
+	width: 100px;
 }
 
 #day-side-panel::-webkit-scrollbar{

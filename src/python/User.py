@@ -2,10 +2,6 @@ import mysql.connector
 import datetime
 from Event import Event
 from datetime import datetime
-<<<<<<< HEAD
-
-=======
->>>>>>> yiorgos
 
 class User():
 
@@ -60,11 +56,8 @@ class User():
             #if isinstance(i,datetime):
             datetimes.append(i[5])
             datetimes.append(i[6])
-<<<<<<< HEAD
         print(datetimes)
         print("hjhhkklhjhj")
-=======
->>>>>>> yiorgos
         
         #check for overlapping events
         
@@ -86,11 +79,8 @@ class User():
             
             d+=2
         if(overlap!=0):
-<<<<<<< HEAD
             print("OVERLAP OCCURS")
             print(overlap)
-=======
->>>>>>> yiorgos
             return 1
         else:
             print("NO overlap")
@@ -364,11 +354,8 @@ class User():
             return f_events[i][2].day
             return f_events[i][2].hour
             return f_events[i][2].minute
-<<<<<<< HEAD
-=======
             
         
->>>>>>> yiorgos
 
     def confirmAsParticipant(self,promotedID,mydb):
         val =(self.userID,promotedID)

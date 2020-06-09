@@ -14,14 +14,46 @@
 	</head>
 
 	<body>
+		<div id="edit-event-panel">
+			<div id="edit-dates">
+				<div class="edit-time">
+					<h2>Starts:</h2>
+					<input id="edit-start-date" type="date">
+					<input id="edit-start-time" type="time">
+				</div>
+				<div class="edit-time">
+					<h2>Ends:</h2>
+					<input id="edit-end-date" type="date">
+					<input id="edit-end-time" type="time">
+				</div>
+				<div>
+					<h2>Info</h2>
+					<textarea id="edit-text"></textarea>
+				</div>
+				<div class="actions">
+					<img src="../resc/x-botton_318-10910.jpg" onclick="hide_edit_event()"height="80px" width="80px">	
+					<img src="../resc/tick.png" onclick="update_event_info();hide_edit_event()" height="80px" width="80px">	
+				</div>
+			</div>
+
+		</div>
 		<div id="event-side-panel">
-			<div id="event-date"></div>
-			<div id="event-location"</div>
-			<div id="event-start">
-			<div id="event-end">
-			<div id="event-descr"></div>
+			<div id="event-date">
+				<div class="event-time"><h2>Starts:</h2><h3 id=event-start></h3></div>
+				<div class="event-time"><h2>Ends:</h2><h3 id=event-end></h3></div>
+			</div>
+			<div><h2>Info:</h2><p id="event-info"><p/></div>
+			<div id="event-type">
+				<h3>Categories:</h3>
+				<ul id="event-categories">
+				</ul>
+			</div>
 			<div id="event-participants"></div>
-			
+			<div class="actions">
+				<img src="../resc/PngItem_5969807.png" height="80px" width="80px" onclick="display_edit_event()">
+				<img src="../resc/trash-can-icon-61364.png"height="80px" width="80px" onclick="delete_event()">
+				<img src="../resc/arrow.png"height="80px" width="80px" onclick="hide_event_panel()">
+			</div>
 		</div>
 		<div id="day-side-panel">
 			<div id="day-date-info" class="d-flex">
@@ -37,16 +69,16 @@
 
 			</div>
 		</div>
-		<div id="big-trans-back-button"></div>
+		<div id="big-trans-back-button"  onclick="hide_event_panel();hide_day_panel();"></div>
 		<div id="main">
 			<div id="top-bar">
-					<div id="controls-container">
-						<div class="control">1</div>
-						<div class="control">2</div>
-						<div class="control">3</div>
-						<div class="control">4</div>
-						<div class="control">5</div>
-					</div>
+				<div id="controls-container">
+					<div class="control"><h1>+</h1></div>
+					<div class="control">2</div>
+					<div class="control">3</div>
+					<div class="control">4</div>
+					<div class="control">5</div>
+				</div>
 			</div>
 			<div id="month-calendar">
 				<div id="day-tags">

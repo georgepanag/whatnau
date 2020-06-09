@@ -13,7 +13,6 @@ mydb= mysql.connector.connect(
 
 #creare user object and download it's events
 usr1 = User(1)
-usr1.getEventsFromDB(mydb)
 
 #figure out todays date
 today = datetime.datetime.today()
@@ -37,6 +36,7 @@ def make_js_complient(variable):
 
 @eel.expose
 def get_stats(year, month,user=usr1):
+    user.getEventsFromDB(mydb)
     days_iter = calendar.Calendar().itermonthdates(year, month)
     days_list = []
     events_list = {} 
@@ -84,6 +84,35 @@ def package_events_array_for_js(year,month,day,user = usr1):
         new_events_array.append(list(map(lambda evnt : [evnt.eventID,evnt.descr,evnt._type,evnt.importance,evnt.start_date,evnt._end_date],slot)))
     return make_js_complient(new_events_array)
 
+@eel.expose
+def get_event_info_from_id(event_id,user=usr1):
+    for event in user.events:
+        if event.eventID == event_id:
+            x = make_js_complient([event.descr, event._type, event.importance, event.start_date,event._end_date,event.shared])
+    return x
+    
+@eel.expose
+def update_event(event_id,new_start,new_end,new_descr,user=usr1):
+    for evnt in user.events:
+        if evnt.eventID == event_id:
+            event = evnt
+            break
+
+    print(new_start)      
+    print(new_end)      
+    print("===========")
+    event.E_setter("start_date",datetime.datetime(*new_start),mydb)
+    event.E_setter("_end_date",datetime.datetime(*new_end),mydb)
+    event.E_setter("descr",new_descr,mydb)
+
+@eel.expose
+def delete_event(evnt_id,user=usr1):
+    for evnt in user.events:
+        if evnt.eventID == evnt_id:
+            event = evnt
+            break
+
+    event.deleteEvent(mydb)
 
 def userExists(user_email,user_pass):
     val=(user_email,user_pass)
@@ -100,7 +129,6 @@ def userExists(user_email,user_pass):
         return False
 
 #-------------------------------
-
 eel.init("../web")
 eel.start('month-view/month.html', size=(1200, 800))
 

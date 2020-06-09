@@ -131,7 +131,14 @@ class User():
             return 2
         else: #not full space
             return 0
-        
+      
+    def promotedEventsToAll(self, mydb):
+        mycursor = mydb.cursor()
+        mycursor.execute("select descr, category, entrance_value, target_aud, start_date, end_date from promoted_event where target_aud="to all")
+        myresult = mycursor.fetchall()
+        print(myresult)
+        mycursor.close()
+                         
      def get_promoted_events_only_fans(self,category,mydb):
         val =(category)
         

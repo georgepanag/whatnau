@@ -74,6 +74,7 @@ entrance_value bigint(16),
 target_aud enum("to all","only fans") default "to all",
 start_date datetime,
 end_date datetime,
+location text,
 
 primary key(promotedID),
 constraint PROMOTED_USER foreign key (userID) references _user(userID) on delete cascade on update cascade
@@ -90,12 +91,42 @@ review_score enum("no review","1","2","3","4","5","6","7","8","9","10") default 
 primary key(userID,promotedID),
 constraint PARTICIPANTS_USER foreign key (userID) references _user(userID) on delete cascade on update cascade,
 constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_event(promotedID) on delete cascade on update cascade
+	
+
 
 
 )engine=InnoDB;
 
+create table _budget(
+budget_ID bigint(16) auto_increment,
+userID bigint(16) ,
+day_selection enum("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"),
+budget_upper_bound bigint(16) default 0,
+monthly_budget bigint(16) default 0,
+day_for_money_spent datetime, 
+day_money_spent bigint(16) default 0,
+
+primary key(budget_ID),
+
+constraint BUDGET_USER foreign key (userID) references _user(userID) on delete cascade on update cascade
+
+)engine=InnoDB;
+
+insert into _budget(userID,day_selection, budget_upper_bound,monthly_budget,day_for_money_spent,day_money_spent)
+values( '1', 14, 900,300,"2020-05-10 15:45:20",50 );
+insert into _budget(userID,day_selection, budget_upper_bound,monthly_budget,day_for_money_spent,day_money_spent)
+values( '2', 23, 1400, 500,"2020-06-01 10:30:40",30 );
+insert into _budget(userID,day_selection)
+values( '3', NULL);
+insert into _budget(userID,day_selection)
+values( '4', NULL);
 
 
+
+insert into promoted_event(userID,descr,category,entrance_value,target_aud,start_date,end_date,location) values (2,"test","arts,underground",10,"only fans","2020-02-13 21:00:00","2020-02-13 22:00:00","Patra"),
+(2,"test2","musical",10,"to all","2020-02-14 11:00:00","2020-02-14 12:00:00","Athens"),
+(3,"test3","sports",0,"to all","2020-03-13 15:00:00","2020-03-13 16:00:00","Thessaloniki"),
+(4,"test4","arts",10,"only fans","2020-02-13 21:00:00","2020-02-13 22:00:00","Crete");
 
 
 
@@ -116,7 +147,9 @@ insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) va
 (1,"Hanging out","social","LOW","2018-02-13 14:00:00","2018-02-13 15:00:00","YES"),
 (1,"undefined","undefined","MED","2018-02-13 16:00:00","2018-02-13 17:00:00","YES"),
 (4,"basketball","sports","HIGH","2018-02-13 18:00:00","2018-02-13 19:00:00","NO"),
-(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO");
+(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO"),
+(1,"Basketball match","sports","MED","2018-06-13 12:00:00","2018-06-13 13:00:00","YES"),
+(1,"Rehersal with band","social,music,arts","HIGH","2018-06-17 17:00:00","2018-06-17 20:00:00","NO");
 
 insert into buddy_req(from_user,to_user,is_accepted) values 
 (1,4,0),

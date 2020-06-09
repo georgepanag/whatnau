@@ -147,7 +147,9 @@ insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) va
 (1,"Hanging out","social","LOW","2018-02-13 14:00:00","2018-02-13 15:00:00","YES"),
 (1,"undefined","undefined","MED","2018-02-13 16:00:00","2018-02-13 17:00:00","YES"),
 (4,"basketball","sports","HIGH","2018-02-13 18:00:00","2018-02-13 19:00:00","NO"),
-(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO");
+(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO"),
+(1,"Basketball match","sports","MED","2018-06-13 12:00:00","2018-06-13 13:00:00","YES"),
+(1,"Rehersal with band","social,music,arts","HIGH","2018-06-17 17:00:00","2018-06-17 20:00:00","NO");
 
 insert into buddy_req(from_user,to_user,is_accepted) values 
 (1,4,0),

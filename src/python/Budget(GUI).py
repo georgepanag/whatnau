@@ -2,6 +2,7 @@ from tkinter import *
 
 window=Tk()
 
+
 btn=Button(window, text="New Transaction", fg='black')
 btn.place(x=400, y=180)
 
@@ -10,6 +11,7 @@ btn.place(x=352, y=220)
 
 btn=Button(window, text="Go Back", fg='black')
 btn.place(x=10, y=10)
+
 
 lbl=Label(window, text="Budget", fg='black', bg='#C0E8D5', font=("Helvetica", 20))
 lbl.place(x=403, y=50)

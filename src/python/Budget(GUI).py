@@ -23,6 +23,8 @@ lbl.place(x=155, y=105)
 window.title('Whatnau')
 window.geometry("900x410+10+10")
 
+
 window.configure(background='#C0E8D5')
+
 
 window.mainloop()

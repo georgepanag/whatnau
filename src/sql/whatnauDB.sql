@@ -13,9 +13,8 @@ interests set("sports","music","arts","theater","cinema","politics","underground
 gender enum("M","F"),/*M=male , F=female*/
 _type enum("O","SU"),/*O=organiser , SU=simple_user*/
 job tinytext default NULL, 
-corporation varchar(25) default NULL,
+/*corporation varchar(25) default NULL,*/
 reg_date datetime default now(),
-shared_space int(3) default 5/*shared event space*/,
 primary key(userID)
 
 
@@ -94,11 +93,11 @@ constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_ev
 )engine=InnoDB;
 
 
-insert into _user(email,usrname,pass,cr_cardID,gender,_type,job,corporation,shared_space) values
-("jason@gmail.com","jason","JJason","54546546","M","SU",null,null,0),
-("mxins@freemail.gr","Marinero","you_shall_not_pass",null,"M","O",null,null,3),
-("lil@hotmail.gr","Lily23","234523",null,"F","O","sales","SalesUK CO",5),
-("bob@yahoo.gr","Bobos","whatever","088879889686986","M","O","Bar owner",null,2);
+insert into _user(email,usrname,pass,cr_cardID,gender,_type,job,) values
+("jason@gmail.com","jason","JJason","54546546","M","SU"),
+("mxins@freemail.gr","Marinero","you_shall_not_pass",null,"M","O"),
+("lil@hotmail.gr","Lily23","234523",null,"F","O","sales"),
+("bob@yahoo.gr","Bobos","whatever","088879889686986","M","O","Bar owner");
 
 
 create table _budget(

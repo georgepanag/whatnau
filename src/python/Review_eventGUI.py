@@ -12,7 +12,8 @@ lbl=Label(text="Choose an event and the type of rating you wish to answer", fg='
 # Create a listbox
 listbox = Listbox(root, width=40, height=15)
 
-# Inserting the listbox items
+# Inserting the listbox items with random values
+# Checking
 listbox.insert(1, "Scorpions concert")
 listbox.insert(2, "Olympiacos-Panathinaikos")
 listbox.insert(3, "Book presentation")
@@ -35,3 +36,4 @@ root.configure(background='#C0E8D5')
 
 
 root.mainloop()
+

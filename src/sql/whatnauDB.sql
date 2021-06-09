@@ -93,6 +93,20 @@ constraint PARTICIPANTS_PROMOTED foreign key (promotedID) references promoted_ev
 )engine=InnoDB;
 
 
+create table _search_event(
+
+userID bigint(16) not null,
+event_ID bigint(16),
+region text ,
+event_hour time,
+category set ("Concerts","Sporting events", "Free of charge events", "Other events"),
+grade_of_popylarity set("1","2","3","4","5"),
+entrance_fee bigint(10),
+
+primary key(event_ID)
+
+)engine=InnoDB;
+
 insert into _user(email,usrname,pass,cr_cardID,gender,_type,job,) values
 ("jason@gmail.com","jason","JJason","54546546","M","SU"),
 ("mxins@freemail.gr","Marinero","you_shall_not_pass",null,"M","O"),

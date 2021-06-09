@@ -136,6 +136,7 @@ button1 = tk.Button(
     height=2,
     bg="blue",
     fg="yellow",
+    command= quit
 )
 button1.place(x=40, y=600)
 

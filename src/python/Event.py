@@ -1,6 +1,10 @@
 import mysql.connector
 
-
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="root123!",
+    database="whatnau")
 
 
 class Event():
@@ -68,6 +72,7 @@ class Event():
             self.E_setter(mode,change)
 
         #mporei kai ston User 
+        
     def deleteEvent(self,mydb):
         val=(str(self.eventID))
         mycursor = mydb.cursor()
@@ -75,5 +80,53 @@ class Event():
         mydb.commit()
         print(mycursor.rowcount, "record(s) affected")
         mycursor.close()
+        
+    def ShowPublicEvents(self, userID, mydb):
+        val = userID
+        mycursor = mydb.cursor()
+        mycursor.execute("select eventID from _event ", (val,))
+
+        myresult = mycursor.fetchone()
+
+        mycursor.close()
+
+    def SearchEvent(self, userID, event_ID, region, event_hour, category, grade_of_popularity, entrance_fee, mydb):
+        val1 = userID
+        val2 = event_ID
+        val3 = region
+        val4 = event_hour
+        val5 = category
+        val6 = grade_of_popularity
+        val7 = entrance_fee
+
+        mycursor = mydb.cursor()
+
+        mycursor.execute("select userID from _event where userID=%s ", (val1,))
+        mycursor.execute("select event_ID from _event where userID=%s ", (val2,))
+        mycursor.execute("select region from _event where userID=%s ", (val3,))
+        mycursor.execute("select event_hour from _event where userID=%s ", (val4,))
+        mycursor.execute("select category from _event where userID=%s ", (val5,))
+        mycursor.execute("select grade_of_popularity from _event where userID=%s ", (val6,))
+        mycursor.execute("select entrance_fee from _event where userID=%s ", (val7,))
+
+        myresult = mycursor.fetchone()
+
+        mycursor.close()
+
+    def RetrieveUsersWithCommonInterests(self, userID,_type):
+        val1 = userID
+        val2 = _type
+        mycursor = mydb.cursor()
+        sql = 'select userID from _event where _type=%s and _event.userID._type=%s ', (val2,val2,)
+        mycursor.execute(sql)
+
+        myresult = mycursor.fetchall()
+
+
+        mycursor.close()
+
+
+#Event1 = Event(1)
+     
 
 

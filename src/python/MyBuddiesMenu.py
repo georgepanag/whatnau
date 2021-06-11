@@ -47,6 +47,23 @@ def destroy_MyBuddiesToplevel():
     w.destroy()
     w = None
 
+def show_Buddies(userID,button):
+    import mysql.connector
+    mydb=mysql.connector.connect(host="localhost",user="root",password="pasatempo64",database="whatnau") 
+    mycursor = mydb.cursor()
+    val=(userID)
+    mycursor.execute("select usrname from _user,(select buddy from buddies where buddies.userID=%s) as b where b.buddy=_user.userID",val)#+str(userID))
+    myresult = mycursor.fetchall()
+           
+    rows = len(myresult)
+
+    for i in myresult:
+        button.insert("end", i)
+    
+    
+
+   
+
 class MyBuddiesToplevel:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -123,6 +140,9 @@ class MyBuddiesToplevel:
         self.Scrolledlistbox1.configure(highlightcolor="#d9d9d9")
         self.Scrolledlistbox1.configure(selectbackground="blue")
         self.Scrolledlistbox1.configure(selectforeground="white")
+        listOfCompanies=['john5','bobHarley','FredFRaud21']
+        show_Buddies(userID,self.Scrolledlistbox1)
+        
 
 # The following code is added to facilitate the Scrolled widgets you specified.
 class AutoScroll(object):

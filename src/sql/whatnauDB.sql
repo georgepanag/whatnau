@@ -45,13 +45,14 @@ constraint FRIENDSHIP foreign key (userID) references _user(userID) on delete ca
 create table _event(
 
 eventID bigint(16) auto_increment,
+event_name text,
 userID bigint(16) not null,
 descr text ,
-_type set("sports","social","arts","business","study","food","workout","travelling","undefined","music") default "undefined",
-importance enum("LOW","MED","HIGH") default "HIGH",
-start_date datetime default null,
-_end_date datetime default null,
-shared enum("YES","NO") default "NO",
+location varchar(25) default "undefined",
+url text,
+event_date date default null,
+ticket_val int(10) default null,
+contact_phone bigint(20) default null,
 
 primary key(eventID),
 constraint EVENT_USER foreign key (userID) references _user(userID) on delete cascade on update cascade
@@ -149,19 +150,19 @@ insert into promoted_event(userID,descr,category,entrance_value,target_aud,start
 
 
 
-insert into buddies(userID,buddy) values (1,2),(2,3),(1,3),(3,2),(2,4),(1,4),(3,4);
+insert into buddies(userID,buddy) values (4,2),(3,2),(4,3),(1,2),(2,4),(1,4),(3,4);
 
 
 
 /*for testing*/
-insert into _event(userID,descr,_type,importance,start_date,_end_date,shared) values
-(1,"Software Engineering Project","social,study","MED","2018-02-13 12:00:00","2018-02-13 13:00:00","NO"),
-(1,"Hanging out","social","LOW","2018-02-13 14:00:00","2018-02-13 15:00:00","YES"),
-(1,"undefined","undefined","MED","2018-02-13 16:00:00","2018-02-13 17:00:00","YES"),
-(4,"basketball","sports","HIGH","2018-02-13 18:00:00","2018-02-13 19:00:00","NO"),
-(2,"concert","arts,social","LOW","2020-02-13 20:23:34","2020-02-13 21:00:00","NO"),
-(1,"Basketball match","sports","MED","2018-06-13 12:00:00","2018-06-13 13:00:00","YES"),
-(1,"Rehersal with band","social,music,arts","HIGH","2018-06-17 17:00:00","2018-06-17 20:00:00","NO");
+insert into _event(userID,event_name,descr,location,event_date,ticket_val,url,contact_phone) values
+(4,"SoftwareEng.","12thConfrence","Patra","2020-06-14",null,"www.url.com",2681036666),
+(4,"BluesNight","Have fun","Athens","2020-06-15",null,"www.url1.com",2681036686),
+(4,"Work3","undefined","undefined","2020-06-13 ",null,"www.url2.com",2681036616),
+(4,"match","basketball","Athens","2020-06-13",10,"www.url3.com",2681016666),
+(4,"A Concert","concert","London","2020-06-13",15,"www.url4.com",2681076666),
+(4,"B Concert","","Ioannina","2020-06-13 ",5,"www.url.com",null),
+(4,"Jazz night","Have fun with jazz","Thessaloniki","2020-06-17",null,"www.url.com",271036666);
 
 insert into buddy_req(from_user,to_user,is_accepted) values 
 (1,4,0),

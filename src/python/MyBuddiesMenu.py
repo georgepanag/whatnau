@@ -49,10 +49,10 @@ def destroy_MyBuddiesToplevel():
 
 def show_Buddies(userID,button):
     import mysql.connector
-    mydb=mysql.connector.connect(host="localhost",user="root",password="pasatempo64",database="whatnau") 
+    mydb=mysql.connector.connect(host="localhost",user="root",password="",database="whatnau") 
     mycursor = mydb.cursor()
     val=(userID)
-    mycursor.execute("select usrname from _user,(select buddy from buddies where buddies.userID=%s) as b where b.buddy=_user.userID",val)#+str(userID))
+    mycursor.execute("select usrname from _user,(select buddy from buddies where buddies.userID=%s) as b where b.buddy=_user.userID",val)
     myresult = mycursor.fetchall()
            
     rows = len(myresult)
@@ -140,7 +140,7 @@ class MyBuddiesToplevel:
         self.Scrolledlistbox1.configure(highlightcolor="#d9d9d9")
         self.Scrolledlistbox1.configure(selectbackground="blue")
         self.Scrolledlistbox1.configure(selectforeground="white")
-        listOfCompanies=['john5','bobHarley','FredFRaud21']
+        
         show_Buddies(userID,self.Scrolledlistbox1)
         
 

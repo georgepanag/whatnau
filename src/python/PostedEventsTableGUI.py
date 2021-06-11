@@ -2,7 +2,7 @@ import mysql.connector
 
 
 
-mydb=mysql.connector.connect(host="localhost",user="root",password="pasatempo64",database="whatnau") 
+mydb=mysql.connector.connect(host="localhost",user="root",password="",database="whatnau") 
 # Python program to create a table
    
 from tkinter import *
